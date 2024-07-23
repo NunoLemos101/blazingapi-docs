@@ -1,0 +1,32 @@
+---
+title: BaseMiddleware
+description: Documentation for the `BaseMiddleware` class.
+---
+
+Namespace `blazingapi.middleware`
+
+The `BaseMiddleware` class provides a template for creating middleware components in your application. Middleware classes that inherit from `BaseMiddleware` must implement its methods to define behavior before and after the main view or other middleware components are executed.
+
+## Middleware Execution Order
+
+Middleware components are executed in the order they are added in `settings.py`. The `execute_before` method is called in the order of the middleware stack, starting from the first middleware component added to the application. The `execute_after` method is called in reverse order of the middleware stack.
+
+You can think of it like an onion: each middleware class is a “layer” that wraps the view, which is in the core of the onion. If the request passes through all the layers of the onion (each one calls `execute_before` and then the request is passed to the next layer), all the way to the view at the core, the response will then pass through every layer (in reverse order) on the way back out executing `execute_after`.
+
+## Class Definition
+
+```python
+class BaseMiddleware:
+
+    def execute_before(self, request):
+        """
+        Code to be executed before the view or next middleware is called.
+        """
+
+    def execute_after(self, request, response):
+        """
+        Code to be executed after the view or next middleware is called on the way out.
+
+        This function is called in reverse order of the middleware stack and can be used
+        to modify the response before being returned to the user.
+        """

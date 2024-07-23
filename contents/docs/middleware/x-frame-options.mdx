@@ -1,0 +1,25 @@
+---
+title: XFrameOptionsMiddleware
+description: Documentation for the `XFrameOptionsMiddleware` class.
+---
+
+Namespace `blazingapi.security.middleware`
+
+The `XFrameOptionsMiddleware` class is a middleware component that is responsible for adding the `X-Frame-Options` header to HTTP responses. This header helps to protect your website from clickjacking attacks by controlling whether a browser should be allowed to render a page in a `<frame>`, `<iframe>`, `<embed>`, or `<object>`.
+
+## Class Definition
+
+```python
+from blazingapi.middleware import BaseMiddleware
+from blazingapi.settings import settings
+
+class XFrameOptionsMiddleware(BaseMiddleware):
+
+    def execute_after(self, request, response):
+
+        if response.headers.get('X-Frame-Options') is not None:
+            return response
+
+        response.headers['X-Frame-Options'] = getattr(settings, 'X_FRAME_OPTIONS', 'DENY').upper()
+
+        return response
