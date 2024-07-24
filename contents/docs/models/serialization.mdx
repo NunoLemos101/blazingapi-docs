@@ -1,0 +1,41 @@
+---
+title: Serialization
+description: Guide to overriding the `serialize()` method in the `Model` class to customize serialization.
+---
+
+The `Model` class includes a `serialize()` method that converts model instances into dictionaries.
+
+The `serialize()` method is called when you pass a model instance to the `Response` object inside a view.
+
+By default, `serialize()` includes all fields of the model or only the fields specified in `serializable_fields`. However, you might need to customize serialization to include additional information or change the format.
+
+## Quick Example
+
+Here's a quick example of how you can override the `serialize()` method in a model class to customize serialization:
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField, TextField
+
+class Article(Model):
+
+    serializable_fields = ['title', 'content']
+
+    title = VarCharField(max_length=255)
+    content = TextField()
+    sensitive_data = VarCharField(max_length=255)
+
+    def serialize(self):
+
+        # Default serialization of specified fields
+        serialized_data = super().serialize()
+
+        # Add custom fields or transform existing ones
+        serialized_data['summary'] = self.content[:100]
+
+        return serialized_data
+```
+
+In this example, the `sensitive_data` field is not included in the `serializable_fields` list, so it won't be serialized by default.
+
+Also, the `serialize()` method is overridden to include a custom `summary` field that contains the first 100 characters of the `content` field.

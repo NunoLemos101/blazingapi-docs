@@ -1,0 +1,18 @@
+---
+title: Model
+description: Guide to using and extending the `Model` class in blazingAPI.
+---
+
+The `Model` class serves as a base class for creating database models. It provides methods for creating tables, saving, updating, deleting, and serializing model instances. Other classes should inherit from `Model` to leverage these functionalities.
+
+## Quick example
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField, TextField
+
+class Article(Model):
+
+    title = VarCharField(max_length=255)
+    content = TextField()
+```

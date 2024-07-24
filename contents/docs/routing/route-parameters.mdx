@@ -1,0 +1,20 @@
+---
+title: Route Parameters
+description: Guide to using route parameters in blazingAPI.
+---
+
+Route parameters in blazingAPI allow you to capture values from the URL and use them within your handler functions. This is useful for accessing specific resources identified by unique identifiers in the URL.
+
+## Defining Routes with Parameters
+
+To define a route with parameters, include the parameter name in curly braces `{}` within the URL pattern. The parameter value from the URL will be passed to the handler function as an argument.
+
+### Example: Route with a Single Parameter
+
+The following example demonstrates how to define a route with a single parameter `user_id` to get the details of a specific user.
+
+```python
+@app.get('/articles/{article_id}')
+def get_article(request, article_id):
+    article = Article.manager.get(id=article_id)
+    return Response(body=article)

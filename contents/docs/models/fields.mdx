@@ -1,0 +1,83 @@
+---
+title: Database Fields
+description: Explanation of the different field types available for models.
+---
+
+BlazingAPI provides various field types for defining the schema of your database models. Each field type corresponds to a specific data type in the database and has attributes that control its behavior, such as whether it is nullable or unique.
+
+## Field Types
+
+### `IntegerField`
+
+Represents an integer field in the database.
+
+- **Attributes**:
+- `nullable` (default: `False`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Ensures all values in the field are unique across the table.
+
+<hr/>
+
+### `TextField`
+
+Represents a text field in the database.
+
+- **Attributes**:
+- `nullable` (default: `False`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Ensures all values in the field are unique across the table.
+
+<hr/>
+
+### `VarCharField`
+
+Represents a variable character field with a specified maximum length.
+
+- **Attributes**:
+- `max_length` (required): The maximum number of characters the field can store.
+- `nullable` (default: `False`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Ensures all values in the field are unique across the table.
+
+<hr/>
+
+### `PrimaryKeyField`
+
+Represents a primary key field in the database, typically used as a unique identifier for each record.
+
+- **Attributes**:
+- No additional attributes. This field is always unique and cannot be `NULL`.
+
+<hr/>
+
+### `ForeignKeyField`
+
+Represents a foreign key field that references a primary key in another table, establishing a relationship between tables.
+
+- **Attributes**:
+- `reference_model` (required): The model class or table name that this field references.
+- `on_delete` (default: `ForeignKeyAction.CASCADE`): Defines the action to take when the referenced record is deleted.
+- `on_update` (default: `ForeignKeyAction.CASCADE`): Defines the action to take when the referenced record is updated.
+- `nullable` (default: `False`): Determines whether the field can be `NULL`.
+
+<hr/>
+
+## Summary
+
+These field types allow you to define the schema of your models with precision, ensuring that your database structure aligns with the requirements of your application. Each field type comes with attributes that control its behavior, giving you the flexibility to enforce data integrity and relationships between tables.
+
+### Example Usage
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import IntegerField, TextField, VarCharField, PrimaryKeyField, ForeignKeyField, ForeignKeyAction
+
+
+class Author(Model):
+
+    name = VarCharField(max_length=255)
+    bio = TextField(nullable=True)
+
+
+class Book(Model):
+
+    title = VarCharField(max_length=255)
+    author_id = ForeignKeyField(reference_model=Author, on_delete=ForeignKeyAction.CASCADE)
+

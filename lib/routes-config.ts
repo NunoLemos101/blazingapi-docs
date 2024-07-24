@@ -15,16 +15,40 @@ export const ROUTES = [
     ],
   },
   {
+    title: "Models",
+    href: "models",
+    items: [
+      { title: "Model", href: "/model" },
+      { title: "Fields", href: "/fields" },
+      { title: "Serialization", href: "/serialization" }
+    ]
+  },
+  {
+    title: "Routing",
+    href: "routing",
+    items: [
+      { title: "Basic Routing", href: "/basic-routing" },
+      { title: "Route Parameters", href: "/route-parameters" }
+    ]
+  },
+  {
+    title: "Authentication",
+    href: "authentication",
+    items: [
+        { title: "Disable Built-In Authentication", href: "/disable-built-in-authentication" }
+      ]
+  },
+  {
     title: "Middleware",
     href: "middleware",
     items: [
       { title: "BaseMiddleware", href: "/base" },
       { title: "CorsMiddleware", href: "/cors" },
       { title: "XFrameOptionsMiddleware", href: "/x-frame-options" },
+      { title: "BearerAuthenticationMiddleware", href: "/bearer-authentication" },
       { title: "Create Custom Middleware", href: "/create-middleware" },
     ],
-  }
-
+  },
 ];
 
 export const page_routes = ROUTES.map(({ href, items }) => {

@@ -1,0 +1,51 @@
+---
+title: Creating Custom Middleware
+description: Guide to creating custom middleware using the `BaseMiddleware` class.
+---
+
+Middleware in web applications sits between the request and the response, allowing you to intercept and process requests before they reach the main view and responses before they are returned to the client. Here’s how you can create custom middleware based on the `BaseMiddleware` class.
+
+## 1. Define Your Custom Middleware Class
+
+```python
+# middleware.py
+from blazingapi.middleware import BaseMiddleware
+
+class MyCustomMiddleware(BaseMiddleware):
+
+    def execute_before(self, request):
+        """
+        Implement actions to perform before the view or next middleware is called.
+        For example, you can log the request details or modify headers.
+        """
+        # Example: Logging request details
+        print(f"Request method: {request.method}. Request path: {request.path}")
+
+    def execute_after(self, request, response):
+        """
+        Implement actions to perform after the view or next middleware is called.
+        This is called in reverse order of middleware stack after the response is generated.
+        """
+        # Example: Modifying response data
+        response.headers['X-Processed-By'] = 'MyCustomMiddleware'
+```
+
+## 2. Register Your Middleware in `settings.py`
+
+Add your custom middleware class to the `MIDDLEWARE_CLASSES` list in `settings.py` to include it in the middleware stack.
+
+```python
+# settings.py
+MIDDLEWARE_CLASSES = [
+    "middleware.MyCustomMiddleware",
+    "blazingapi.middleware.CorsMiddleware",
+    "blazingapi.auth.middleware.BearerAuthenticationMiddleware",
+    ...
+]
+```
+
+## 3. Middleware Execution Order
+
+Middleware components are executed in the order they are added in `settings.py`. The `execute_before` method is called in the order of the middleware stack, starting from the first middleware component added to the application. The `execute_after` method is called in reverse order of the middleware stack.
+
+For a more detailed explanation, refer to the [Middleware Execution Order](/docs/middleware/base#middleware-execution-order) documentation.

@@ -1,0 +1,20 @@
+---
+title: Basic routing
+description: Guide to defining routes in blazingAPI.
+---
+
+Routing in blazingAPI allows you to define how HTTP requests are handled by your application. Routes are associated with specific URL patterns and HTTP methods, and they connect these patterns to handler functions that process the requests.
+
+## Defining Routes
+
+To define routes in blazingAPI, use decorators like `@app.get`, `@app.post`, `@app.put` and `@app.delete` to associate a URL pattern with a handler function. Below are examples illustrating how to define routes.
+
+### 1. Simple Route
+
+A simple route handles requests to a specific URL. For example, the following route handles GET requests to `/users` and returns a list of users.
+
+```python
+@app.get('/articles')
+def list_articles(request):
+    articles = Article.manager.all()
+    return Response(body=articles)

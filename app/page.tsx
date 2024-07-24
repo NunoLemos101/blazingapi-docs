@@ -6,9 +6,9 @@ import "./globals.css";
 
 const GradientText = () => {
     return (
-        <h1 className={"animatedGradient"}>
+        <span className={"animatedGradient"}>
             Python
-        </h1>
+        </span>
     );
 }
 

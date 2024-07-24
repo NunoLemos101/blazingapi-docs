@@ -1,0 +1,92 @@
+---
+title: Disable Built-in Authentication
+description: Guide to completely deactivating authentication in blazingAPI by modifying `settings.py`.
+---
+
+If you need to disable authentication in your blazingAPI application or implement your own, you can do so by removing specific components related to authentication from your `settings.py` file. This involves removing the authentication middleware, authentication models, views, and relevant endpoints.
+
+### How a `settings.py` file looks with authentication disabled
+
+```python
+VIEW_FILES = [
+    # "blazingapi.auth.views",
+    "views",
+]
+
+MODEL_FILES = [
+    # "blazingapi.auth.models",
+    "models",
+]
+
+MIDDLEWARE_CLASSES = [
+    "blazingapi.security.middleware.CorsMiddleware",
+    "blazingapi.security.middleware.XFrameOptionsMiddleware",
+    # "blazingapi.auth.middleware.BearerAuthenticationMiddleware",
+]
+
+DB_FILE = "db.sqlite3"
+
+# LOGIN_ENDPOINT = "/api/auth/login"
+# REGISTER_ENDPOINT = "/api/auth/register"
+# ME_ENDPOINT = "/api/auth/me"
+
+X_FRAME_OPTIONS = "DENY"
+
+CORS_ALLOWED_ORIGINS = ["*"]
+CORS_ALLOWED_METHODS = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+CORS_ALLOWED_HEADERS = ["Content-Type", "Authorization"]
+```
+
+## Steps to Disable Authentication
+
+### 1. Remove Authentication Models
+
+Authentication models are responsible for managing user authentication in your application. To deactivate authentication, remove the `blazingapi.auth.models` module from the `MODEL_FILES` list in `settings.py`.
+
+This will prevent the application from creating the `User` table.
+
+```python
+MODEL_FILES = [
+    ...
+    "blazingapi.auth.models", # <- Remove this one
+    ...
+]
+```
+
+### 2. Remove Authentication Views
+
+Authentication views are responsible for handling user authentication in your application. To deactivate authentication, remove the `blazingapi.auth.views` module from the `VIEW_FILES` list in `settings.py`.
+
+This will prevent the application from rendering the authentication endpoints.
+
+```python
+VIEW_FILES = [
+    ...
+    "blazingapi.auth.views", # <- Remove this one
+    ...
+]
+```
+
+### 3. Remove Authentication Middleware
+
+Authentication middleware is responsible for handling authentication logic in your application. To deactivate authentication, remove the `BearerAuthenticationMiddleware` from the `MIDDLEWARE` list in `settings.py`.
+
+```python
+MIDDLEWARE_CLASSES = [
+    ...
+    "blazingapi.auth.middleware.BearerAuthenticationMiddleware", # <- Remove this one
+    ...
+]
+```
+
+### 4. Remove Authentication Endpoints
+
+Authentication path endpoints are used by `blazingapi.auth.views`.
+
+By removing the `blazingapi.auth.views` module from the `VIEW_FILES` list, the authentication endpoints will no longer be used in your application so they can be safely removed.
+
+```python
+LOGIN_ENDPOINT = "/api/auth/login" # <- Remove LOGIN_ENDPOINT variable
+REGISTER_ENDPOINT = "/api/auth/register" # <- Remove REGISTER_ENDPOINT variable
+ME_ENDPOINT = "/api/auth/me" # <- Remove ME_ENDPOINT variable
+```
