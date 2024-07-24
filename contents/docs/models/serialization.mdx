@@ -36,6 +36,6 @@ class Article(Model):
         return serialized_data
 ```
 
-In this example, the `sensitive_data` field is not included in the `serializable_fields` list, so it won't be serialized by default.
+In this example, the `sensitive_data` field is not included in the `serializable_fields` list, so it won't be serialized by `super().serialize()`.
 
 Also, the `serialize()` method is overridden to include a custom `summary` field that contains the first 100 characters of the `content` field.

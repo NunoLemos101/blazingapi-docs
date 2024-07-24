@@ -13,6 +13,7 @@ The `XFrameOptionsMiddleware` class is a middleware component that is responsibl
 from blazingapi.middleware import BaseMiddleware
 from blazingapi.settings import settings
 
+
 class XFrameOptionsMiddleware(BaseMiddleware):
 
     def execute_after(self, request, response):

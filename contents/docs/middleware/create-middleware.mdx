@@ -11,6 +11,7 @@ Middleware in web applications sits between the request and the response, allowi
 # middleware.py
 from blazingapi.middleware import BaseMiddleware
 
+
 class MyCustomMiddleware(BaseMiddleware):
 
     def execute_before(self, request):
