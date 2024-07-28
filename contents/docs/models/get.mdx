@@ -1,0 +1,22 @@
+---
+title: Get
+description: Guide to using the `get` method in blazingAPI.
+---
+
+The `get` method is a part of the `Manager` class, which is automatically assigned to each `Model` class as the `manager` attribute.
+
+This method allows you to retrieve a single instance of a model from the database based on the provided criteria.
+
+## Quick example
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField, TextField
+
+class Article(Model):
+
+    title = VarCharField(max_length=255)
+    content = TextField()
+
+# Retrieve an article with a specific id
+article = Article.manager.get(id=10)

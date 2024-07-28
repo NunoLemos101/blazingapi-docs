@@ -20,6 +20,8 @@ export const ROUTES = [
     items: [
       { title: "Model", href: "/model" },
       { title: "Fields", href: "/fields" },
+      { title: "Get", href: "/get" },
+      { title: "Filter", href: "/filter" },
       { title: "Serialization", href: "/serialization" }
     ]
   },
