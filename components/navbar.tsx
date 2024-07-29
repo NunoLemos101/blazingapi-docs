@@ -7,16 +7,15 @@ import Anchor from "./anchor";
 import { SheetLeftbar } from "./leftbar";
 import { page_routes } from "@/lib/routes-config";
 import { SheetClose } from "@/components/ui/sheet";
+import Image from "next/image";
+import logo from "../public/logo.png"
 
 export const NAVLINKS = [
   {
     title: "Documentation",
     href: `/docs/${page_routes[0].href}`,
   },
-  {
-    title: "Examples",
-    href: "#",
-  },
+  /*
   {
     title: "Guides",
     href: "#",
@@ -29,6 +28,7 @@ export const NAVLINKS = [
     title: "Blog",
     href: "#",
   },
+  */
 ];
 
 export function Navbar() {
@@ -57,6 +57,7 @@ export function Navbar() {
               >
                 <GithubIcon className="h-[1.1rem] w-[1.1rem]" />
               </Link>
+              {/*
               <Link
                 href="#"
                 className={buttonVariants({
@@ -66,6 +67,7 @@ export function Navbar() {
               >
                 <TwitterIcon className="h-[1.1rem] w-[1.1rem]" />
               </Link>
+              */}
               <ModeToggle />
             </div>
           </div>
@@ -78,7 +80,8 @@ export function Navbar() {
 export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2.5">
-      <HexagonIcon className="w-7 h-7 text-muted-foreground fill-current" />
+      {/* <HexagonIcon className="w-7 h-7 text-muted-foreground fill-current" /> */}
+      <Image src={logo} width={48} height={48} alt={"logo.png"} />
       <h2 className="text-md font-bold">BlazingAPI</h2>
     </Link>
   );
