@@ -1,0 +1,150 @@
+---
+title: filter
+description: Guide to using the `filter` method in blazingAPI.
+---
+
+The `filter` method is a part of the `QuerySet` class.
+
+This method allows you to retrieve multiple instances of a model from the database based on the provided criteria.
+
+## Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.filter(title='Hello World')
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles WHERE title = 'Hello World';
+```
+
+## Chain multiple filters
+
+You can chain multiple filters together to create more complex queries. For example:
+
+```python
+from models import Article
+
+query = Article.manager.filter(title='Hello World')
+
+author = input('Enter author name: ')
+
+if author != '':
+    query = query.filter(author=author)
+```
+
+<hr/>
+
+## AND operator
+
+The `filter` method supports the `AND` operator implicitly. When you provide multiple conditions to the `filter` method, it combines them using the `AND` operator.
+
+This allows you to filter records based on multiple conditions that all need to be true.
+
+### Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.filter(title='Hello World', author='John Doe')
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles WHERE title = 'Hello World' AND author = 'John Doe';
+```
+
+<hr/>
+
+## IN operator
+
+The `filter` method also supports the `IN` operator by adding the suffix `__in` to the field name.
+
+This allows you to filter records based on a list of values.
+
+### Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.filter(id__in=[1, 2, 3])
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles WHERE id IN (1, 2, 3);
+```
+
+<hr/>
+
+## OR operator
+
+The `filter` method supports the `OR` operator by using the `Q` object. When you provide multiple conditions to the `Q` object and combine them with the `|` operator, it translates to the `OR` operator in SQL.
+
+This allows you to filter records based on multiple conditions where at least one needs to be true.
+
+### Quick example
+
+```python
+from blazingapi.auth.models import User
+from blazingapi.orm.query import Q
+
+admin = User.manager.filter(Q(username="admin") | Q(username="root"))
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM users WHERE username = 'admin' OR username = 'root';
+```
+
+## LIMIT operator
+
+The `all` and `filter` methods support limiting the number of results returned by using Python's list slicing syntax. This translates to the `LIMIT` clause in SQL.
+
+This allows you to retrieve a specific number of records from the database.
+
+### Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.all()[:10]
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles LIMIT 10;
+```
+
+<hr/>
+
+## OFFSET operator
+
+The `all` and `filter` methods support offsetting the results returned by using Python's list slicing syntax. This translates to the `OFFSET` clause in SQL.
+
+This allows you to skip a specific number of records before starting to return the results from the database.
+
+### Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.all()[10:]
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles OFFSET 10;
+```
+
+<hr/>
+
+The difference between the `get` method and the `filter` method is that the `get` method will return a single instance of the model, while the `filter` method will return a list of instances even if the number of rows is 1.

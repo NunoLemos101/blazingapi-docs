@@ -1,0 +1,22 @@
+---
+title: LIMIT
+description: Guide to using the `all` method with slicing for limiting results in blazingAPI.
+---
+
+The `all` method supports limiting the number of results returned by using Python's list slicing syntax. This translates to the `LIMIT` clause in SQL.
+
+This allows you to retrieve a specific number of records from the database.
+
+## Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.all()[:10]
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles LIMIT 10;
+```

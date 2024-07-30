@@ -1,0 +1,24 @@
+---
+title: get
+description: Guide to using the `get` method in blazingAPI.
+---
+
+The `get` method is a part of the `QuerySet` class.
+
+This method allows you to retrieve a single instance of a model from the database based on the provided criteria.
+
+## Quick example
+
+```python
+from models import Article
+
+article = Article.manager.get(id=1)
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles WHERE id = 1;
+```
+
+The difference between the `get` method and the `filter` method is that the `get` method will return a single instance of the model, while the `filter` method will return a list of instances even if the number of rows is 1.

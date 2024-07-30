@@ -1,0 +1,22 @@
+---
+title: OFFSET
+description: Guide to using the `all` method with slicing for offsetting results in blazingAPI.
+---
+
+The `all` method supports offsetting the results returned by using Python's list slicing syntax. This translates to the `OFFSET` clause in SQL.
+
+This allows you to skip a specific number of records before starting to return the results from the database.
+
+## Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.all()[10:]
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles OFFSET 10;
+```

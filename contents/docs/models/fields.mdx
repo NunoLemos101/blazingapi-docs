@@ -72,12 +72,13 @@ from blazingapi.orm.fields import IntegerField, TextField, VarCharField, Primary
 
 class Author(Model):
 
-    name = VarCharField(max_length=255)
-    bio = TextField(nullable=True)
+    name = VarCharField(max_length=256)
+    biography = TextField(nullable=True)
 
 
-class Book(Model):
+class Article(Model):
 
-    title = VarCharField(max_length=255)
-    author_id = ForeignKeyField(reference_model=Author, on_delete=ForeignKeyAction.CASCADE)
+    title = VarCharField(max_length=256)
+    content = TextField()
+    author = ForeignKeyField(reference_model=Author, on_delete=ForeignKeyAction.CASCADE)
 

@@ -1,0 +1,22 @@
+---
+title: IN
+description: Guide to using the `filter` method in blazingAPI.
+---
+
+The `filter` method also supports the `IN` operator by adding the suffix `__in` to the field name.
+
+This allows you to filter records based on a list of values.
+
+## Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.filter(id__in=[1, 2, 3])
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles WHERE id IN (1, 2, 3);
+```

@@ -1,0 +1,40 @@
+---
+title: Lazy Evaluation
+description: Guide to understanding when QuerySets are evaluated in blazingAPI.
+---
+
+In blazingAPI, QuerySets are lazy objects, which means they can be constructed, filtered, sliced, and generally passed around without actually hitting the database. No database activity actually occurs until you do something to evaluate the queryset.
+
+This allows you to chain multiple filter conditions without causing multiple queries to the database. The actual SQL query is executed only when you try to access the data.
+
+## Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.filter(title='Hello World')  # No SQL query at this point
+articles = articles.filter(author='John Doe')  # Still no SQL query
+
+# SQL query happens here when we try to iterate over the QuerySet
+for article in articles:
+    print(article.title)
+```
+
+## When QuerySets are evaluated
+
+QuerySets are evaluated in the following scenarios:
+
+1. When you iterate over the QuerySet using a loop.
+2. When you convert the QuerySet to a list.
+3. When you try to access the QuerySet using an index.
+
+## How to force evaluation
+
+If you want to force the evaluation of a QuerySet, you can call the `execute` method on the QuerySet.
+
+```python
+from models import Article
+
+# SQL query happens immediately
+articles = Article.manager.filter(title='Hello World').execute()
+```

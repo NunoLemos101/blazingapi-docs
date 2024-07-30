@@ -21,9 +21,9 @@ class Article(Model):
 
     serializable_fields = ['title', 'content']
 
-    title = VarCharField(max_length=255)
+    title = VarCharField(max_length=256)
     content = TextField()
-    sensitive_data = VarCharField(max_length=255)
+    sensitive_data = VarCharField(max_length=256)
 
     def serialize(self):
 

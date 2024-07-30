@@ -1,0 +1,22 @@
+---
+title: SELECT ALL
+description: Guide to using the `all` method in blazingAPI.
+---
+
+the `all` method is used to retrieve all the records from the database.
+
+It translates to the SQL `SELECT * FROM` clause.
+
+## Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.all()
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles;
+```

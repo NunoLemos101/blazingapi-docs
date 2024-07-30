@@ -20,9 +20,31 @@ export const ROUTES = [
     items: [
       { title: "Model", href: "/model" },
       { title: "Fields", href: "/fields" },
-      { title: "Get", href: "/get" },
-      { title: "Filter", href: "/filter" },
+      { title: "Lazy Retrieval of Related Objects", href: "/lazy-retrieval-of-related-objects" },
       { title: "Serialization", href: "/serialization" }
+    ]
+  },
+  {
+    title: "QuerySet",
+    href: "queryset",
+    items: [
+      { title: "All", href: "/all" },
+      { title: "Filter", href: "/filter" },
+      { title: "Get", href: "/get" },
+      { title: "Lazy Evaluation", href: "/lazy-evaluation" },
+    ]
+  },
+  {
+    title: "SQL Query",
+    href: "sql-query",
+    items: [
+      { title: "SELECT ALL", href: "/select-all" },
+      { title: "WHERE", href: "/where" },
+      { title: "AND", href: "/and" },
+      { title: "IN", href: "/in" },
+      { title: "OR", href: "/or" },
+      { title: "LIMIT", href: "/limit" },
+      { title: "OFFSET", href: "/offset" },
     ]
   },
   {
@@ -37,8 +59,8 @@ export const ROUTES = [
     title: "Authentication",
     href: "authentication",
     items: [
-        { title: "Disable Built-In Authentication", href: "/disable-built-in-authentication" }
-      ]
+      { title: "Disable Built-In Authentication", href: "/disable-built-in-authentication" }
+    ]
   },
   {
     title: "Middleware",

@@ -1,0 +1,35 @@
+---
+title: Lazy Retrieval of Related Objects
+description: Learn how BlazingAPI lazy retrieves related objects.
+---
+
+In BlazingAPI, lazy loading allows related objects to be loaded only when they are accessed, rather than when the initial query is made. This approach helps improve the performance of your application by reducing the number of database queries.
+
+## Quick example
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField, TextField, ForeignKeyField
+
+
+class Book(Model):
+    title = VarCharField(max_length=255)
+
+
+class Article(Model):
+    title = VarCharField(max_length=255)
+    content = TextField()
+    book = ForeignKeyField(Book)
+
+
+# Fetch all articles
+articles = Article.manager.all()
+
+# Access the first article
+article = articles[0]
+
+print(article.title)  # The related book is not loaded yet
+
+print(article.book)  # The related book is loaded now
+print(article.book.title)  # The book title is accessed from cache, no additional query is made
+```

@@ -1,0 +1,22 @@
+---
+title: AND
+description: Guide to using the `filter` method with multiple conditions in blazingAPI.
+---
+
+The `filter` method supports the `AND` operator implicitly. When you provide multiple conditions to the `filter` method, it combines them using the `AND` operator.
+
+This allows you to filter records based on multiple conditions that all need to be true.
+
+## Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.filter(title='Hello World', author='John Doe')
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles WHERE title = 'Hello World' AND author = 'John Doe';
+```

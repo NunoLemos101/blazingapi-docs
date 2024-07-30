@@ -1,0 +1,23 @@
+---
+title: OR
+description: Guide to using the `filter` method with the `Q` object for OR conditions in blazingAPI.
+---
+
+The `filter` method supports the `OR` operator by using the `Q` object. When you provide multiple conditions to the `Q` object and combine them with the `|` operator, it translates to the `OR` operator in SQL.
+
+This allows you to filter records based on multiple conditions where at least one needs to be true.
+
+## Quick example
+
+```python
+from blazingapi.auth.models import User
+from blazingapi.orm.query import Q
+
+admin = User.manager.filter(Q(username="admin") | Q(username="root"))
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM users WHERE username = 'admin' OR username = 'root';
+```

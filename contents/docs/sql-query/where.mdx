@@ -1,0 +1,22 @@
+---
+title: WHERE
+description: Guide to using the `filter` method in blazingAPI.
+---
+
+The `filter` method is used to retrieve multiple instances of a model from the database based on the provided criteria.
+
+It translates to the SQL `WHERE` clause.
+
+## Quick example
+
+```python
+from models import Article
+
+articles = Article.manager.filter(title='Hello World')
+```
+
+This would translate to the following SQL query:
+
+```sql
+SELECT * FROM articles WHERE title = 'Hello World';
+```
