@@ -20,6 +20,9 @@ export const ROUTES = [
     items: [
       { title: "Model", href: "/model" },
       { title: "Fields", href: "/fields" },
+      { title: "Saving Objects", href: "/saving-objects" },
+      { title: "Updating Objects", href: "/updating-objects" },
+      { title: "Deleting Objects", href: "/deleting-objects" },
       { title: "Lazy Retrieval of Related Objects", href: "/lazy-retrieval-of-related-objects" },
       { title: "Serialization", href: "/serialization" }
     ]

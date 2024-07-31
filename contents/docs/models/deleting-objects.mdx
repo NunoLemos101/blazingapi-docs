@@ -1,0 +1,26 @@
+---
+title: Deleting Objects
+description: Guide on how to delete model instances using BlazingAPI ORM.
+---
+
+In BlazingAPI, deleting a model instance involves calling the `delete` method on the instance. This process removes the instance from the database.
+
+## Quick Example
+
+Let's go through an example of deleting an instance of the `Article` model.
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField, TextField, ForeignKeyField
+
+
+class Article(Model):
+    title = VarCharField(max_length=255)
+    content = TextField()
+
+
+articles = Article.manager.all()
+
+for article in articles:
+    article.delete()
+```

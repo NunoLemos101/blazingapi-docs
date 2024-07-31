@@ -1,0 +1,41 @@
+---
+title: Saving Objects
+description: Guide on how to save model instances using BlazingAPI ORM.
+---
+
+In BlazingAPI, saving a model instance involves creating an instance of the model, setting its attributes, and calling the `save` method. This process ensures that the instance is persisted in the database.
+
+## Quick Example
+
+Let's go through an example of saving instances of two models: `Book` and `Article`.
+
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField, TextField, ForeignKeyField
+
+
+class Book(Model):
+    title = VarCharField(max_length=255)
+
+
+class Article(Model):
+    title = VarCharField(max_length=255)
+    content = TextField()
+    book = ForeignKeyField(Book)
+
+book = Book(title="The Great Gatsby")
+article = Article(title="Chapter 1", content="In my younger and more vulnerable years...", book=book)
+
+# Save the book and article instances
+article.save()
+```
+
+By calling `article.save()`, BlazingAPI will automatically detect `book` is not saved yet and save it before saving the `article` instance.
+
+Optionally, you can save the `book` instance separately before saving the `article`.
+
+```python
+book.save()
+article.save()
+```

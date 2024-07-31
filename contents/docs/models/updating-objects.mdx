@@ -1,0 +1,29 @@
+---
+title: Updating Objects
+description: Guide on how to update model instances using BlazingAPI ORM.
+---
+
+In BlazingAPI, updating a model instance involves calling the `update` method on the instance and passing the fields to update as keyword arguments. This process ensures that the instance's data is modified in the database.
+
+## Quick Example
+
+Let's go through an example of updating an instance of the `Article` model.
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField, TextField, ForeignKeyField
+
+
+class Article(Model):
+    title = VarCharField(max_length=255)
+    content = TextField()
+
+
+article = Article(title="Chapter 1", content="In my younger and more vulnerable years...")
+
+# Save the article instance
+article.save()
+
+# Update the article instance
+article.update(title="Chapter 2", content="I was thirty. Before me stretched the portentous, menacing road of a new decade.")
+```
