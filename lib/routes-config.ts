@@ -24,7 +24,8 @@ export const ROUTES = [
       { title: "Updating Objects", href: "/updating-objects" },
       { title: "Deleting Objects", href: "/deleting-objects" },
       { title: "Lazy Retrieval of Related Objects", href: "/lazy-retrieval-of-related-objects" },
-      { title: "Serialization", href: "/serialization" }
+      { title: "Serialization", href: "/serialization" },
+      { title: "Default Functions", href: "/default-functions" },
     ]
   },
   {
@@ -48,6 +49,14 @@ export const ROUTES = [
       { title: "OR", href: "/or" },
       { title: "LIMIT", href: "/limit" },
       { title: "OFFSET", href: "/offset" },
+    ]
+  },
+  {
+    title: "Validators",
+    href: "validators",
+    items: [
+      { title: "EmailValidator", href: "/email-validator" },
+      { title: "Create Custom Validator", href: "/create-custom-validator" }
     ]
   },
   {

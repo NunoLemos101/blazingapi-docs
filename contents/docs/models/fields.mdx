@@ -9,38 +9,50 @@ BlazingAPI provides various field types for defining the schema of your database
 
 ### `IntegerField`
 
-Represents an integer field in the database.
+Represents an `INTEGER` field in the database.
 
 - **Attributes**:
-- `nullable` (default: `False`): Determines whether the field can be `NULL`.
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
 - `unique` (default: `False`): Ensures all values in the field are unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators`(default: `[]`) : A list of validators that validate the field.
 
 <hr/>
 
 ### `TextField`
 
-Represents a text field in the database.
+Represents a `TEXT` field in the database.
 
 - **Attributes**:
-- `nullable` (default: `False`): Determines whether the field can be `NULL`.
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
 - `unique` (default: `False`): Ensures all values in the field are unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators`(default: `[]`) : A list of validators that validate the field.
 
 <hr/>
 
 ### `VarCharField`
 
-Represents a variable character field with a specified maximum length.
+Represents a `VARCHAR()` field with a specified maximum length.
 
 - **Attributes**:
+
 - `max_length` (required): The maximum number of characters the field can store.
-- `nullable` (default: `False`): Determines whether the field can be `NULL`.
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
 - `unique` (default: `False`): Ensures all values in the field are unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators`(default: `[]`) : A list of validators that validate the field.
 
 <hr/>
 
 ### `PrimaryKeyField`
 
-Represents a primary key field in the database, typically used as a unique identifier for each record.
+Represents an `INTEGER PRIMARY KEY` field in the database, typically used as a unique identifier for each record.
 
 - **Attributes**:
 - No additional attributes. This field is always unique and cannot be `NULL`.
@@ -52,12 +64,158 @@ Represents a primary key field in the database, typically used as a unique ident
 Represents a foreign key field that references a primary key in another table, establishing a relationship between tables.
 
 - **Attributes**:
+
 - `reference_model` (required): The model class or table name that this field references.
 - `on_delete` (default: `ForeignKeyAction.CASCADE`): Defines the action to take when the referenced record is deleted.
 - `on_update` (default: `ForeignKeyAction.CASCADE`): Defines the action to take when the referenced record is updated.
-- `nullable` (default: `False`): Determines whether the field can be `NULL`.
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `validators`(default: `[]`) : A list of validators that validate the field.
 
 <hr/>
+
+### `PositiveIntegerField`
+
+Represents an `INTEGER` field that only accepts positive integer values.
+
+The positive value is enforced by the `PositiveNumberValidator()` validator.
+
+- **Attributes**:
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Determines whether the field must be unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators` (default: `[PositiveNumberValidator()]`): A list of validators that validate the field.
+
+<hr/>
+
+### `NegativeIntegerField`
+
+Represents an `INTEGER` field that only accepts positive integer values.
+
+The negative value is enforced by the `NegativeNumberValidator()` validator.
+
+- **Attributes**:
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Determines whether the field must be unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators` (default: `[NegativeNumberValidator()]`): A list of validators that validate the field.
+
+<hr/>
+
+### `NonPositiveIntegerField`
+
+Represents an `INTEGER` field that only accepts non-positive integer values.
+
+The non-positive value is enforced by the `MaxValueValidator(0)` validator.
+
+- **Attributes**:
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Determines whether the field must be unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators` (default: `[MaxValueValidator(0)]`): A list of validators that validate the field.
+
+<hr/>
+
+### `NonNegativeIntegerField`
+
+Represents an `INTEGER` field that only accepts non-negative integer values.
+
+The non-negative value is enforced by the `MinValueValidator(0)` validator.
+
+- **Attributes**:
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Determines whether the field must be unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators` (default: `[MinValueValidator(0)]`): A list of validators that validate the field.
+
+<hr/>
+
+### `FloatField`
+
+Represents a `REAL` field and retrieves the values as `float` objects.
+
+- **Attributes**:
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Determines whether the field must be unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators` (default: `[]`): A list of validators that validate the field.
+
+<hr/>
+
+### `PositiveFloatField`
+
+Represents a `REAL` field that only accepts positive real numbers and retrieves the values as `float` objects.
+
+The positive value is enforced by the `PositiveNumberValidator()` validator.
+
+- **Attributes**:
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Determines whether the field must be unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators` (default: `[PositiveNumberValidator()]`): A list of validators that validate the field.
+
+<hr/>
+
+### `NegativeFloatField`
+
+Represents a `REAL` field that only accepts negative real numbers and retrieves the values as `float` objects.
+
+The negative value is enforced by the `NegativeNumberValidator()` validator.
+
+- **Attributes**:
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Determines whether the field must be unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators` (default: `[NegativeNumberValidator()]`): A list of validators that validate the field.
+
+<hr/>
+
+### `NonPositiveFloatField`
+
+Represents a `REAL` field that only accepts non-positive real numbers and retrieves the values as `float` objects.
+
+The non-positive value is enforced by the `MaxValueValidator(0)` validator.
+
+- **Attributes**:
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Determines whether the field must be unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators` (default: `[MaxValueValidator(0)]`): A list of validators that validate the field.
+
+<hr/>
+
+### `NonNegativeFloatField`
+
+Represents a `REAL` field that only accepts non-positive real numbers and retrieves the values as `float` objects.
+
+The non-negative value is enforced by the `MinValueValidator(0)` validator.
+
+- **Attributes**:
+
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `unique` (default: `False`): Determines whether the field must be unique across the table.
+- `choices` (default: `None`): A list of valid choices for the field.
+- `validators` (default: `[MinValueValidator(0)]`): A list of validators that validate the field.
+
+<hr/>
+
 
 ## Summary
 
@@ -81,4 +239,4 @@ class Article(Model):
     title = VarCharField(max_length=256)
     content = TextField()
     author = ForeignKeyField(reference_model=Author, on_delete=ForeignKeyAction.CASCADE)
-
+```

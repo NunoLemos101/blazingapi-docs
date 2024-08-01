@@ -1,0 +1,35 @@
+---
+title: Default Functions
+description: Guide to passing functions as default values in BlazingAPI model fields.
+---
+
+In BlazingAPI, you can use functions to generate default values for fields. This is particularly useful for fields that need dynamic defaults, such as random values or timestamps. By specifying a function as the `default` parameter, you can ensure that the field gets a fresh value each time a new instance is created.
+
+## Quick Example
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import TextField, IntegerField, DateTimeField
+
+def generate_full_name(**kwargs):
+    return f"{kwargs['first_name']} {kwargs['last_name']}"
+
+def generate_age():
+    return random.randint(18, 65)
+
+class MyUser(Model):
+
+        first_name = TextField()
+        last_name = TextField()
+        full_name = TextField(default=generate_full_name)
+        age = IntegerField(default=generate_age)
+        date_created = DateTimeField(default=datetime.now)
+
+instance = MyModel(first_name="John", last_name="Doe")
+
+print(instance.full_name)  # John Doe
+```
+
+When BlazingAPI calls back the default function, it passes back the keyword arguments that were used to create the instance. This allows you to use the values of other fields to generate the default value.
+
+BlazingAPI automatically detects whether the default function accepts `**kwargs` or not.

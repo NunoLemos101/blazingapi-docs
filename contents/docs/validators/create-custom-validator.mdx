@@ -1,0 +1,41 @@
+---
+title: Create Custom Validators
+description: Guide to extending the `BaseValidator` class and creating custom validators in BlazingAPI.
+---
+
+The `BaseValidator` class in BlazingAPI provides a foundation for creating custom validators for your models. By extending this class, you can define your own validation logic to ensure data integrity and enforce specific constraints.
+
+## Overview
+
+To create a custom validator, you'll need to extend the `BaseValidator` class and implement the `__call__` method. This method will contain the logic for your validation. When the validator is invoked, it will execute the `__call__` method, which will raise an exception if the validation fails.
+
+## BaseValidator Class
+
+The `BaseValidator` class serves as an abstract base class that other validators can extend. It defines a single method, `__call__`, which must be implemented by subclasses.
+
+```python
+class BaseValidator:
+
+    def __call__(self, *args, **kwargs):
+        raise NotImplementedError("Subclasses must implement the `__call__` method.")
+```
+
+## Creating a Custom Validator
+
+To create a custom validator, you'll need to define a new class that extends the `BaseValidator` class and implements the `__call__` method. This method should contain the validation logic that you want to enforce.
+
+It should raise an exception if the validation fails, and not return anything if the validation passes.
+
+```python
+from blazingapi.orm.validators import BaseValidator
+
+
+class ChoiceValidator(BaseValidator):
+
+    def __init__(self, choices):
+        self.param = param
+
+    def __call__(self, value):
+        if value not in self.choices:
+            raise ValueError(f"Value must be one of {self.choices}.")
+```
