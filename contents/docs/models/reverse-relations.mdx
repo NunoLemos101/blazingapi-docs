@@ -1,0 +1,77 @@
+---
+title: Reverse Relations
+description: Guide to using the `related_name` attribute to access reverse relations in BlazingAPI.
+---
+
+The `related_name` attribute in `ForeignKeyField` allows you to define and access reverse relationships between models. This is useful for querying related objects from the referenced model.
+
+## Overview
+
+When you define a foreign key in a model using `ForeignKeyField`, you can specify a `related_name` attribute. This attribute sets up a reverse relationship, enabling you to easily access related objects from the referenced model.
+
+## Quick Example
+
+Here is a quick example demonstrating how to use `related_name` to access reverse relationships.
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField, ForeignKeyField
+
+
+class Author(Model):
+    name = VarCharField(max_length=256)
+
+
+class Book(Model):
+    title = VarCharField(max_length=256)
+    author = ForeignKeyField(Author, related_name='books')
+
+
+# Retrieve some author
+author = Author.manager.get(id=1)
+
+# Access all books by the author
+books = author.books.all()
+
+for book in books:
+    print(book.title)
+```
+
+Behind the scenes, BlazingAPI is executing the following SQL query:
+
+```sql
+SELECT * FROM book WHERE author = 1;
+```
+
+## More Complex Example
+
+Here is a more complex example demonstrating how to use `related_name` to access reverse relationships.
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField, ForeignKeyField
+from blazingapi.orm.query import Q
+
+
+class Author(Model):
+    name = VarCharField(max_length=256)
+
+
+class Book(Model):
+    title = VarCharField(max_length=256)
+    author = ForeignKeyField(Author, related_name='books')
+
+
+author = Author.manager.get(id=1)
+
+books = author.books.filter(Q(title='The Great Gatsby') | Q(title='Slaughterhouse-Five'))
+
+for book in books:
+    print(book.title)
+```
+
+Behind the scenes, BlazingAPI is executing the following SQL query:
+
+```sql
+SELECT * FROM book WHERE author = 1 AND (title = 'The Great Gatsby' OR title = 'Slaughterhouse-Five');
+```
