@@ -75,6 +75,20 @@ Represents a foreign key field that references a primary key in another table, e
 
 <hr/>
 
+### `OneToOneField`
+
+Represents a one-to-one relationship between two tables, where each record in one table corresponds to exactly one record in the other table.
+
+- `reference_model` (required): The model class or table name that this field references.
+- `on_delete` (default: `ForeignKeyAction.CASCADE`): Defines the action to take when the referenced record is deleted.
+- `on_update` (default: `ForeignKeyAction.CASCADE`): Defines the action to take when the referenced record is updated.
+- `default` (required if `nullable` is `False`): The default value for the field.
+- `nullable` (default: `True`): Determines whether the field can be `NULL`.
+- `related_name` (default: `f"{table}_set"`): The name of the reverse relation from the referenced model to the current model.
+- `validators`(default: `[]`) : A list of validators that validate the field.
+
+<hr/>
+
 ### `PositiveIntegerField`
 
 Represents an `INTEGER` field that only accepts positive integer values.
