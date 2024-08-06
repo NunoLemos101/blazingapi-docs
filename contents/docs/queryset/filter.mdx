@@ -23,7 +23,7 @@ SELECT * FROM articles WHERE title = 'Hello World';
 
 ## Chain multiple filters
 
-You can chain multiple filters together to create more complex queries. For example:
+Because querysets are lazily evaluated, you can chain multiple filters together to create more complex queries.
 
 ```python
 from models import Article

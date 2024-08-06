@@ -28,13 +28,16 @@ QuerySets are evaluated in the following scenarios:
 2. When you convert the QuerySet to a list.
 3. When you try to access the QuerySet using an index.
 
-## How to force evaluation
 
-If you want to force the evaluation of a QuerySet, you can call the `execute` method on the QuerySet.
+<Note title={"Good to know"} type={"note"}>
+    ## How to force evaluation
 
-```python
-from models import Article
+    If you want to force the evaluation of a QuerySet, you can call the `execute` method.
 
-# SQL query happens immediately
-articles = Article.manager.filter(title='Hello World').execute()
-```
+    ```python
+    from models import Article
+
+    # SQL query happens immediately
+    articles = Article.manager.filter(title='Hello World').execute()
+    ```
+</Note>

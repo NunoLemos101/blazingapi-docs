@@ -22,14 +22,20 @@ class Article(Model):
     book = ForeignKeyField(Book)
 
 
-# Fetch all articles
+# Build the query, the query is not executed yet
 articles = Article.manager.all()
 
-# Access the first article
+# Now the query is executed, when we try to evaluate the result
 article = articles[0]
 
-print(article.title)  # The related book is not loaded yet
+print(article.content)  # The related book is not loaded yet
 
-print(article.book)  # The related book is loaded now
-print(article.book.title)  # The book title is accessed from cache, no additional query is made
+print(article.book.title)  # The query for the book is executed now and saved on cache
+
+# The book is accessed from cache, no additional query is made
+print(article.book.title)
+print(article.book.title)
+print(article.book.title)
+print(article.book.title)
+print(article.book.title)
 ```

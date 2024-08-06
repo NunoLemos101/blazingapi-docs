@@ -3,6 +3,8 @@ title: Default Functions
 description: Guide to passing functions as default values in BlazingAPI model fields.
 ---
 
+import Note from "../../../components/note";
+
 In BlazingAPI, you can use functions to generate default values for fields. This is particularly useful for fields that need dynamic defaults, such as random values or timestamps. By specifying a function as the `default` parameter, you can ensure that the field gets a fresh value each time a new instance is created.
 
 ## Quick Example
@@ -32,4 +34,6 @@ print(instance.full_name)  # John Doe
 
 When BlazingAPI calls back the default function, it passes back the keyword arguments that were used to create the instance. This allows you to use the values of other fields to generate the default value.
 
-BlazingAPI automatically detects whether the default function accepts `**kwargs` or not.
+<Note title={"Good to know"} type={"note"}>
+    BlazingAPI automatically detects whether the default function accepts `**kwargs` or not.
+</Note>

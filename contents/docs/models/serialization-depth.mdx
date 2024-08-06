@@ -1,0 +1,71 @@
+---
+title: Serialization Depth
+description: Guide to setting the serialization depth of a model
+---
+
+If your model has relationships with other models, you can control how deep the serialization goes by setting the `depth_serialization_fields` property on the model.
+
+In this property, you can specify a list of `ForeignKeyField` and `OneToOneField` fields you want to serialize and the serialization will go deeper and serialize the fields of the related model.
+
+When the serialization goes deeper, it will recursively call `serialize()` method of the related model and obey to the `serializable_fields` and  `depth_serialization_fields` properties set on the related model, allowing you to control the serialization on multiple levels.
+
+## Quick Example
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField, TextField, ForeignKeyField
+
+
+class Author(Model):
+
+    name = VarCharField(max_length=255)
+
+
+class Book(Model):
+
+    serializable_fields = ['id', 'title', 'author']
+    depth_serialization_fields = ['author']
+
+    title = VarCharField(max_length=255)
+    sensitive_information = VarCharField(max_length=255)
+    author = ForeignKeyField(Author)
+
+
+class Article(Model):
+
+    depth_serialization_fields = ['book']
+
+    title = VarCharField(max_length=255)
+    content = TextField()
+    book = ForeignKeyField(Book)
+
+
+author = Author(name='F. Scott Fitzgerald')
+author.save()
+
+book = Book(title='The Great Gatsby', sensitive_information="*", author=author)
+book.save()
+
+article = Article(title='The Great Gatsby', content='A great book', book=book)
+article.save()
+
+print(article.serialize())
+```
+
+The output of `article.serialize()` will be:
+
+```json
+{
+    "id": 1,
+    "title": "The Great Gatsby",
+    "content": "A great book",
+    "book": {
+        "id": 1,
+        "title": "The Great Gatsby",
+        "author": {
+            "id": 1,
+            "name": "F. Scott Fitzgerald"
+        }
+    }
+}
+```

@@ -26,6 +26,7 @@ export const ROUTES = [
       { title: "Lazy Retrieval of Related Objects", href: "/lazy-retrieval-of-related-objects" },
       { title: "Reverse Relations", href: "/reverse-relations" },
       { title: "Serialization", href: "/serialization" },
+      { title: "Serialization Depth", href: "/serialization-depth" },
       { title: "Default Functions", href: "/default-functions" },
     ]
   },
