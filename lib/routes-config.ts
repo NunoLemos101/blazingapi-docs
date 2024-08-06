@@ -58,6 +58,12 @@ export const ROUTES = [
     href: "validators",
     items: [
       { title: "EmailValidator", href: "/email-validator" },
+      { title: "ChoiceValidator", href: "/choice-validator" },
+      { title: "RegexValidator", href: "/regex-validator" },
+      { title: "MaxValueValidator", href: "/max-value-validator" },
+      { title: "MinValueValidator", href: "/min-value-validator" },
+      { title: "PositiveNumberValidator", href: "/positive-number-validator" },
+      { title: "NegativeNumberValidator", href: "/negative-number-validator" },
       { title: "Create Custom Validator", href: "/create-custom-validator" }
     ]
   },

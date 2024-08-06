@@ -37,7 +37,8 @@ The server will be served using Gunicorn if the local machine is running on a Un
 # main.py
 from blazingapi.server import run
 
-run()
+if __name__ == "__main__":
+    run()
 ```
 
 ### `views.py`

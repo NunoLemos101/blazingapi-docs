@@ -1,0 +1,30 @@
+---
+title: PositiveNumberValidator
+description: Documentation for the `PositiveNumberValidator ` class.
+---
+
+Namespace `blazingapi.orm.validators`
+
+The `PositiveNumberValidator ` class is a validator that checks if a value is a positive number.
+
+## Class Definition
+
+```python
+class MinValueValidator(BaseValidator):
+
+    def __call__(self, value):
+        if value is not None and value <= 0:
+            raise ValueError(f"Value {value} must be a positive number")
+```
+
+## How to Use
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import FloatField
+from blazingapi.orm.validators import PositiveNumberValidator
+
+
+class Product(Model):
+    price = FloatField(validators=[PositiveNumberValidator()])
+```

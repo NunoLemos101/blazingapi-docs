@@ -79,6 +79,8 @@ Represents a foreign key field that references a primary key in another table, e
 
 Represents a one-to-one relationship between two tables, where each record in one table corresponds to exactly one record in the other table.
 
+- **Attributes**:
+
 - `reference_model` (required): The model class or table name that this field references.
 - `on_delete` (default: `ForeignKeyAction.CASCADE`): Defines the action to take when the referenced record is deleted.
 - `on_update` (default: `ForeignKeyAction.CASCADE`): Defines the action to take when the referenced record is updated.
@@ -231,10 +233,35 @@ The non-negative value is enforced by the `MinValueValidator(0)` validator.
 
 <hr/>
 
+<Note title="Good to know" type="note">
+When adding validators to a field that already has a default validator, the new validators will be appended to the existing list of validators.
+
+For example:
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import PositiveIntegerField, MinValueValidator
+
+
+class MyModel(Model):
+    number = PositiveIntegerField(validators=[MinValueValidator(10)])
+```
+
+In this example, the `number` field will have two validators:
+
+- `PositiveNumberValidator()` - default validator for `PositiveIntegerField`.
+- `MinValueValidator(10)`. - custom validator added to the field.
+
+</Note>
+
+<hr/>
+
 
 ## Summary
 
 These field types allow you to define the schema of your models with precision, ensuring that your database structure aligns with the requirements of your application. Each field type comes with attributes that control its behavior, giving you the flexibility to enforce data integrity and relationships between tables.
+
+<hr/>
 
 ### Example Usage
 
@@ -248,10 +275,22 @@ class Author(Model):
     name = VarCharField(max_length=256)
     biography = TextField(nullable=True)
 
+def generate_summary(**kwargs):
+    return kwargs['content'][:100]
 
 class Article(Model):
 
     title = VarCharField(max_length=256)
     content = TextField()
-    author = ForeignKeyField(reference_model=Author, on_delete=ForeignKeyAction.CASCADE)
+    summary = VarCharField(max_length=100, default=generate_summary)
+    author = ForeignKeyField(reference_model=Author, related_name='articles')
 ```
+
+<Note title="Good to know" type="note">
+
+    When BlazingAPI calls back the default function `generate_summary`, it passes back the keyword arguments that were used to create the instance.
+
+    This allows you to use the values of other fields to generate the default value.
+
+    See more about [default functions](/docs/models/default-functions).
+</Note>

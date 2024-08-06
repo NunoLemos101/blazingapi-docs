@@ -35,5 +35,13 @@ print(instance.full_name)  # John Doe
 When BlazingAPI calls back the default function, it passes back the keyword arguments that were used to create the instance. This allows you to use the values of other fields to generate the default value.
 
 <Note title={"Good to know"} type={"note"}>
-    BlazingAPI automatically detects whether the default function accepts `**kwargs` or not.
+    The default values are assigned on constructor, not when the model is being saved on database.
+
+    This explains why `instance.full_name` would be `John Doe` in the example above.
+
+    If you want to generate a default value **only** when the model is being saved, you should override the `save` method of the model class
+</Note>
+<br/>
+<Note title={"Good to know"} type={"note"}>
+    BlazingAPI automatically detects whether the default function accepts `**kwargs` or not using the `inspect` module.
 </Note>

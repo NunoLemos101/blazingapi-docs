@@ -1,0 +1,33 @@
+---
+title: MaxValueValidator
+description: Documentation for the `MaxValueValidator ` class.
+---
+
+Namespace `blazingapi.orm.validators`
+
+The `MaxValueValidator ` class is a validator that checks if a value is less than or equal to a maximum value.
+
+## Class Definition
+
+```python
+class MaxValueValidator(BaseValidator):
+
+    def __init__(self, max_value):
+        self.max_value = max_value
+
+    def __call__(self, value):
+        if value is not None and value > self.max_value:
+            raise ValueError(f"Value {value} exceeds maximum value of {self.max_value}")
+```
+
+## How to Use
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import IntegerField
+from blazingapi.orm.validators import MaxValueValidator
+
+
+class Employee(Model):
+    age = IntegerField(validators=[MaxValueValidator(65)])
+```

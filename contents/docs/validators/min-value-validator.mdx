@@ -1,0 +1,33 @@
+---
+title: MinValueValidator
+description: Documentation for the `MinValueValidator ` class.
+---
+
+Namespace `blazingapi.orm.validators`
+
+The `MinValueValidator ` class is a validator that checks if a value is greater than or equal to a minimum value.
+
+## Class Definition
+
+```python
+class MinValueValidator(BaseValidator):
+
+    def __init__(self, min_value):
+        self.min_value = min_value
+
+    def __call__(self, value):
+        if value is not None and value < self.min_value:
+            raise ValueError(f"Value {value} is less than minimum value of {self.min_value}")
+```
+
+## How to Use
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import IntegerField
+from blazingapi.orm.validators import MaxValueValidator
+
+
+class Employee(Model):
+    age = IntegerField(validators=[MinValueValidator(18)])
+```
