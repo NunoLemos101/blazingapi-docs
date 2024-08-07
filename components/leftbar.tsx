@@ -91,31 +91,57 @@ function Menu({ isSheet = false }) {
 }
 
 function AnimatedMenu({ isSheet = false }) {
-  const [openSections, setOpenSections] = useState({});
+  const [openSection, setOpenSection] = useState(null);
   const contentRefs = useRef({});
 
+  // Set open section when component mounts (client-side)
+  useEffect(() => {
+    // Check current URL
+    const currentPath = window.location.pathname;
+
+    // Try to find a section that matches the current URL
+    const matchingSection = ROUTES.find(route => currentPath.startsWith(`/docs/${route.href}`));
+
+    if (matchingSection) {
+      setOpenSection(matchingSection.href);
+    } else {
+      // Fallback to localStorage
+      const storedOpenSection = localStorage.getItem('openSection');
+      if (storedOpenSection) {
+        setOpenSection(storedOpenSection);
+      }
+    }
+  }, []);
+
   const toggleSection = (section) => {
-    setOpenSections((prevState) => ({
-      ...prevState,
-      [section]: !prevState[section],
-    }));
+    const newOpenSection = openSection === section ? null : section;
+    setOpenSection(newOpenSection);
+    // Save the new state to localStorage
+    if (newOpenSection !== null) {
+      localStorage.setItem('openSection', newOpenSection);
+    } else {
+      localStorage.removeItem('openSection');
+    }
   };
 
   useEffect(() => {
-    for (const section in openSections) {
-      if (openSections[section] && contentRefs.current[section]) {
-        const el = contentRefs.current[section];
-        if (el) {
+    // Set the height of the content elements based on the open section
+    for (const section in contentRefs.current) {
+      const el = contentRefs.current[section];
+      if (el) {
+        if (section === openSection) {
           el.style.setProperty('--content-height', `${el.scrollHeight}px`);
+        } else {
+          el.style.setProperty('--content-height', '0px');
         }
       }
     }
-  }, [openSections]);
+  }, [openSection]);
 
   return (
       <>
         {ROUTES.map(({ href, items, title }) => {
-          const isOpen = openSections[href];
+          const isOpen = openSection === href;
           return (
               <div className="flex flex-col gap-3 mt-5" key={href}>
                 <button
@@ -123,17 +149,12 @@ function AnimatedMenu({ isSheet = false }) {
                     className="flex items-center justify-between font-medium sm:text-sm"
                 >
                   <h4>{title}</h4>
-                  {isOpen ? (
-                      <ChevronDown width={16} />
-                  ) : (
-                      <ChevronRight width={16} />
-                  )}
+                  {isOpen ? <ChevronDown width={16} /> : <ChevronRight width={16} />}
                 </button>
                 <div
                     ref={(el) => (contentRefs.current[href] = el)}
-                    className={`overflow-hidden transition-all duration-300 ${
-                        isOpen ? 'animate-expand' : 'animate-collapse'
-                    }`}
+                    className={`overflow-hidden`}
+                    style={{ '--content-height': '0px' }}
                 >
                   {isOpen && (
                       <div className="flex flex-col gap-3 sm:text-sm dark:text-neutral-300/85 text-neutral-800 ml-0.5">
