@@ -1,0 +1,131 @@
+---
+title: Understanding built-in User
+description: Detailed documentation of the built-in User class for your web API.
+---
+
+The `User` class is an ORM model that manages user-related data for your web API. Below, you'll find a detailed explanation of its attributes and methods.
+
+## Class definition
+
+```python
+import secrets
+import bcrypt
+
+from blazingapi.orm.fields import VarCharField
+from blazingapi.orm.models import Model
+
+
+class User(Model):
+    _table = 'users'
+    serializable_fields = ['id', 'username', 'email', 'token']
+
+    username = VarCharField(max_length=100, unique=True)
+    email = VarCharField(max_length=100, unique=True)
+    password_hash = VarCharField(max_length=60)
+    token = VarCharField(max_length=100, unique=True, nullable=True)
+
+    @property
+    def is_authenticated(self):
+        return True if self.id else False
+
+    def set_password(self, password: str):
+        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+    def check_password(self, password: str) -> bool:
+        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
+
+    def generate_token(self, length=32):
+        return secrets.token_urlsafe(length)
+
+    def save(self):
+        if not self.token:
+            self.token = self.generate_token()
+        super().save()
+```
+
+## Attributes
+
+### `_table`
+
+- **Type**: `str`
+- **Description**: Specifies the name of the database table. For the `User` class, it is set to `users`.
+
+### `serializable_fields`
+
+- **Type**: `list`
+- **Description**: A list of fields that can be serialized (converted to a JSON-compatible format). For `User`, these are `['id', 'username', 'email', 'token']`.
+
+### `username`
+
+- **Type**: `VarCharField`
+- **Attributes**: `max_length=100`, `unique=True`
+- **Description**: Stores the username. It must be unique.
+
+### `email`
+
+- **Type**: `VarCharField`
+- **Attributes**: `max_length=100`, `unique=True`
+- **Description**: Stores the user's email. It must be unique.
+
+### `password_hash`
+
+- **Type**: `VarCharField`
+- **Attributes**: `max_length=60`
+- **Description**: Stores the hashed password of the user.
+
+### `token`
+
+- **Type**: `VarCharField`
+- **Attributes**: `max_length=100`, `nullable=True`
+- **Description**: Stores a unique token for the user, used for authentication.
+
+## Properties
+
+### `is_authenticated`
+
+- **Type**: `bool`
+- **Description**: Returns `True` if the user is authenticated, otherwise `False`.
+
+## Methods
+
+### `set_password(password: str)`
+
+- **Parameters**: `password` (str) - the password to hash and store.
+- **Description**: Hashes the given password and stores it in the `password_hash` attribute.
+
+### `check_password(password: str) -> bool`
+
+- **Parameters**: `password` (str) - the password to verify.
+- **Returns**: `bool` - `True` if the password matches the stored hash, otherwise `False`.
+- **Description**: Verifies if the provided plain-text password matches the hashed password stored in the `password_hash` attribute.
+
+### `generate_token(length=32)`
+
+- **Parameters**: `length` (int, optional) - the length of the token (default is 32).
+- **Returns**: `str` - a URL-safe token.
+- **Description**: Generates a URL-safe token of the specified length.
+
+### `save()`
+
+- **Description**: Overrides the base `save` method. Before saving, it ensures that a unique `token` is set if it hasn't been already. Calls the `super().save()` method to perform the actual save operation.
+
+## Usage Example
+
+Here's a quick example of how you might use the `User` class:
+
+```python
+from your_module import User
+
+# Create a new user
+new_user = User(username='john_doe', email='john@example.com')
+new_user.set_password('super_secure_password')
+new_user.save()
+
+# Check if the user is authenticated
+print(new_user.is_authenticated)  # True
+
+# Verify password
+if new_user.check_password('super_secure_password'):
+    print("Password is correct!")
+else:
+    print("Incorrect password.")

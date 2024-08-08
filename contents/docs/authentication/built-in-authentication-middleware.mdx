@@ -1,0 +1,32 @@
+---
+title: BearerAuthenticationMiddleware
+description: Documentation for the `BearerAuthenticationMiddleware` class.
+---
+
+Namespace `blazingapi.auth.middleware`
+
+The `BearerAuthenticationMiddleware` class is a middleware component that is responsible for handling Bearer Token Authentication in your application. It extends the `BaseMiddleware` class and modifies the request object based on the Authorization header.
+
+## Class Definition
+
+```python
+from blazingapi.auth.models import User, AnonymousUser
+from blazingapi.middleware import BaseMiddleware
+
+
+class BearerAuthenticationMiddleware(BaseMiddleware):
+
+    def execute_before(self, request) -> None:
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            request.user = AnonymousUser()
+            return
+
+        token = auth_header.split(' ')[1]
+        user = User.manager.get(token=token)
+
+        if user is None:
+            request.user = AnonymousUser()
+            return
+
+        request.user = user

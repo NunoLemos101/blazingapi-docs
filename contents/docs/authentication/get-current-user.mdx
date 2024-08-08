@@ -1,0 +1,38 @@
+---
+title: Get Current User
+description: Guide on how to retrieve the currently authenticated user via the API endpoint `api/auth/me`.
+---
+
+To retrieve information about the currently authenticated user, you need to make a `GET` request to the `api/auth/me` endpoint. The request should include the `Authorization` header with a valid authentication token.
+
+<Note title="How to change the 'me' endpoint?" type={"note"}>
+    <br/>
+    You can change the endpoint by modifying `ME_ENDPOINT` in `settings.py`.
+</Note>
+
+## Endpoint
+
+- **URL**: `api/auth/me`
+- **Method**: `GET`
+- **Content-Type**: `application/json`
+- **Headers**: `Authorization: Bearer <token>`
+
+## Example Request
+
+Here is an example of how to make a GET request using `curl`:
+
+```sh
+curl -X GET "http://yourapi.com/api/auth/me" \
+     -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ"
+```
+
+### Example Response
+
+```json
+{
+  "id": 1,
+  "username": "john_doe",
+  "email": "john@example.com",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ"
+}
+```

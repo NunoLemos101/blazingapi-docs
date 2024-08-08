@@ -55,9 +55,9 @@ MODEL_FILES = [
 
 ### 2. Remove Authentication Views
 
-Authentication views are responsible for handling user authentication in your application. To deactivate authentication, remove the `blazingapi.auth.views` module from the `VIEW_FILES` list in `settings.py`.
+Authentication views are responsible for handling user authentication in your application. To deactivate the built-in views, remove the `blazingapi.auth.views` module from the `VIEW_FILES` list in `settings.py`.
 
-This will prevent the application from rendering the authentication endpoints.
+This will prevent the application from rendering the authentication views.
 
 ```python
 VIEW_FILES = [

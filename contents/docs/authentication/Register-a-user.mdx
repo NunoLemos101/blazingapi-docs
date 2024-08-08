@@ -1,0 +1,79 @@
+---
+title: Register a user
+description: Guide on how to register a new user via the API endpoint `api/auth/register`.
+---
+
+To register a new user with your web API, you need to make a `POST` request to the `api/auth/register` endpoint. The request should contain `username`, `email`, and `password` in the body.
+
+<Note title="How to change the registration endpoint?" type={"note"}>
+    <br/>
+    You can change the endpoint by modifying `REGISTER_ENDPOINT` in `settings.py`.
+
+</Note>
+
+## Endpoint
+
+- **URL**: `api/auth/register`
+- **Method**: `POST`
+- **Content-Type**: `application/json`
+
+## Request Body
+
+The request body should be a JSON object containing:
+
+- **username** (string): The desired username of the user (must be unique).
+- **email** (string): The email address of the user (must be unique).
+- **password** (string): The password for the user's account.
+
+### Example Request Body
+
+```json
+{
+  "username": "john_doe",
+  "email": "john@example.com",
+  "password": "super_secure_password"
+}
+```
+
+### Example Response
+
+```json
+{
+  "id": 1,
+  "username": "john_doe",
+  "email": "john@example.com",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ"
+}
+```
+
+<br/>
+
+<Note title="How to authenticate future requests?" type={"note"}>
+    <br/>
+    To authenticate future requests, you should add the `token` to the `Authorization` header of future requests with prefix `Bearer`.
+
+    The `Authorization` header should look like this:
+
+    ```
+    Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ
+    ```
+</Note>
+
+## Built-in registration view
+
+The code below shows the logic for registering a new user using the built-in registration view.
+
+```python
+from blazingapi.app import app
+from blazingapi.auth.models import User
+from blazingapi.response import Response
+from blazingapi.settings import settings
+
+
+@app.post(settings.REGISTER_ENDPOINT)
+def register(request):
+    user = User(username=request.data['username'], email=request.data['email'])
+    user.set_password(request.data["password"])
+    user.save()
+    return Response(body=user, status=201)
+```

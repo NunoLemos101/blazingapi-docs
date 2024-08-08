@@ -1,0 +1,85 @@
+---
+title: Log In a User
+description: Guide on how to log in a user via the API endpoint `api/auth/login`.
+---
+
+To log in a user with your web API, you need to make a `POST` request to the `api/auth/login` endpoint. The request should contain `username` and `password` in the body.
+
+<Note title="How to change the login endpoint?" type={"note"}>
+    <br/>
+    You can change the endpoint by modifying `LOGIN_ENDPOINT` in `settings.py`.
+</Note>
+
+## Endpoint
+
+- **URL**: `api/auth/login`
+- **Method**: `POST`
+- **Content-Type**: `application/json`
+
+## Request Body
+
+The request body should be a JSON object containing:
+
+- **username** (string): The username of the user.
+- **password** (string): The password for the user's account.
+
+### Example Request Body
+
+```json
+{
+  "username": "john_doe",
+  "password": "super_secure_password"
+}
+```
+
+### Example Response
+
+```json
+{
+  "id": 1,
+  "username": "john_doe",
+  "email": "john@example.com",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ"
+}
+```
+
+<br/>
+
+<Note title="How to authenticate future requests?" type={"note"}>
+    <br/>
+    To authenticate future requests, you should add the `token` to the `Authorization` header of future requests with prefix `Bearer`.
+
+    The `Authorization` header should look like this:
+
+    ```
+    Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ
+    ```
+</Note>
+
+## Built-in login view
+
+The code below shows the logic for logging in a user using the built-in login view.
+
+```python
+from blazingapi.app import app
+from blazingapi.auth.models import User
+from blazingapi.response import Response
+from blazingapi.settings import settings
+
+
+@app.post(settings.LOGIN_ENDPOINT)
+def login(request):
+
+    if request.user.is_authenticated:
+        return Response(body=request.user, status=200)
+
+    username = request.data["username"]
+    password = request.data["password"]
+
+    user = User.manager.get(username=username)
+
+    if user.check_password(password):
+        return Response(body=user, status=200)
+
+    return Response(body={"error": "Invalid credentials"}, status=401)
+```
