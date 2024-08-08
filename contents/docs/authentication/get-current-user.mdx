@@ -36,3 +36,19 @@ curl -X GET "http://yourapi.com/api/auth/me" \
   "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ"
 }
 ```
+
+## Built-in login view
+
+The code below shows the logic for getting the current user.
+
+```python
+from blazingapi.app import app
+from blazingapi.response import Response
+from blazingapi.settings import settings
+from blazingapi.auth.permissions import IsAuthenticated
+
+
+@app.get(settings.ME_ENDPOINT, permissions=[IsAuthenticated])
+def me(request):
+    return Response(body=request.user, status=200)
+```

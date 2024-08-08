@@ -62,9 +62,10 @@ The code below shows the logic for logging in a user using the built-in login vi
 
 ```python
 from blazingapi.app import app
-from blazingapi.auth.models import User
 from blazingapi.response import Response
 from blazingapi.settings import settings
+from blazingapi.auth.models import User
+from blazingapi.auth.exceptions import AuthenticationFailedException
 
 
 @app.post(settings.LOGIN_ENDPOINT)
@@ -81,5 +82,5 @@ def login(request):
     if user.check_password(password):
         return Response(body=user, status=200)
 
-    return Response(body={"error": "Invalid credentials"}, status=401)
+    raise AuthenticationFailedException()
 ```
