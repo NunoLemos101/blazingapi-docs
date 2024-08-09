@@ -1,0 +1,19 @@
+---
+title: ServiceUnavailableException
+description: Documentation for the `ServiceUnavailableException` class.
+---
+
+Namespace `blazingapi.exceptions`
+
+The `ServiceUnavailableException` class is a subclass of the `APIException` class.
+
+It should be raised when the server is currently unable to handle the request due to a temporary overloading or maintenance of the server.
+
+## Class Definition
+
+```python
+class ServiceUnavailableException(APIException):
+    status_code = 503
+    default_detail = 'The service is temporarily unavailable. Please try again later.'
+    default_code = 'service_unavailable'
+```

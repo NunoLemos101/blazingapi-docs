@@ -1,0 +1,68 @@
+---
+title: Create Custom Exception
+description: Guide on how to create a custom exception class.
+---
+
+You can create custom exception classes by subclassing the `APIException` class. Custom exceptions are useful for handling specific errors in your application.
+
+## Real-World Example
+
+In this example, we'll create a custom exception class called `InvalidInputException` that extends the `APIException` class. This exception will be used to handle invalid input data in our application.
+
+### Define the Custom Exception Class
+
+First, create a new file called `exceptions.py` and define the `InvalidInputException` class.
+
+```python
+# exceptions.py
+from blazingapi.exceptions import APIException
+
+
+class InvalidInputException(APIException):
+    status_code = 400
+    default_detail = 'The input data is invalid.'
+    default_code = 'invalid_input'
+
+    def __init__(self, detail=None, status_code=None, invalid_fields=None):
+        super().__init__(detail or self.default_detail, status_code or self.status_code)
+        self.invalid_fields = invalid_fields or {}
+
+    def serialize(self, request=None):
+        result = super().serialize(request)
+        if self.invalid_fields:
+            result['invalid_fields'] = self.invalid_fields
+        return result
+```
+
+### Usage in Views
+
+Now, you can use the `InvalidInputException` class in your views to raise an exception when the input data is invalid.
+
+```python
+# views.py
+from blazingapi.app import app
+
+from exceptions import InvalidInputException
+
+@app.post('/books')
+def create_book(request):
+    invalid_fields = {}
+    if 'title' not in data:
+        invalid_fields['title'] = 'Title is required.'
+    if 'author' not in data:
+        invalid_fields['author'] = 'Author is required.'
+
+    if invalid_fields:
+        raise InvalidInputException(invalid_fields=invalid_fields)
+
+    # Create book and return Response
+```
+
+<Note title={"Good to know"} type={"note"}>
+    <br/>
+    This is just an example of how you can create a custom exception class.
+
+    For this use case, we highly recommend using the built-in `HasValidJSONSchema` permission.
+
+    See more about it in the [Validate Request Body](/docs/routing/validate-request-body) guide.
+</Note>

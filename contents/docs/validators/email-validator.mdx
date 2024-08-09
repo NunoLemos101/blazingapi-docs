@@ -7,6 +7,18 @@ Namespace `blazingapi.orm.validators`
 
 The `EmailValidator` class is a validator that checks if a field is a valid email address.
 
+## How to Use
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import VarCharField
+from blazingapi.orm.validators import EmailValidator
+
+
+class Author(Model):
+    email = VarCharField(max_length=256, validators=[EmailValidator()])
+```
+
 ## Class Definition
 
 ```python
@@ -22,16 +34,4 @@ class EmailValidator:
     def __call__(self, value):
         if value and not self.email_regex.match(value):
             raise ValueError(f"Invalid email address: {value}")
-```
-
-## How to Use
-
-```python
-from blazingapi.orm.models import Model
-from blazingapi.orm.fields import VarCharField
-from blazingapi.orm.validators import EmailValidator
-
-
-class Author(Model):
-    email = VarCharField(max_length=256, validators=[EmailValidator()])
 ```

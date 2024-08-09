@@ -7,6 +7,19 @@ Namespace `blazingapi.auth.permissions`
 
 The `IsAuthenticated` class is a permission class that allows access only to authenticated users.
 
+## How to use
+
+```python
+from blazingapi.app import app
+from blazingapi.auth.permissions import IsAuthenticated
+
+@app.get('/protected', permissions=[IsAuthenticated])
+def protected_view(request):
+    """
+    This view is protected and only authenticated users can access it.
+    """
+```
+
 ## Class Definition
 
 ```python
@@ -24,17 +37,3 @@ class IsAuthenticated(BasePermission):
         if not hasattr(request, 'user') or isinstance(request.user, AnonymousUser):
             raise AuthenticationFailedException()
 ```
-
-## How to use
-
-```python
-from blazingapi.app import app
-from blazingapi.auth.permissions import IsAuthenticated
-
-@app.route('/protected', permissions=[IsAuthenticated])
-def protected_view(request):
-    """
-    This view is protected and only authenticated users can access it.
-    """
-```
-

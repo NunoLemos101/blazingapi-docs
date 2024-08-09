@@ -7,6 +7,18 @@ Namespace `blazingapi.orm.validators`
 
 The `RegexValidator` class is a validator that checks if a value matches a regular expression pattern.
 
+## How to Use
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import TextField
+from blazingapi.orm.validators import RegexValidator
+
+
+class Product(Model):
+    code = TextField(validators=[RegexValidator(r'^[A-Z]{3}-\d{4}$')])
+```
+
 ## Class Definition
 
 ```python
@@ -20,16 +32,4 @@ class RegexValidator(BaseValidator):
     def __call__(self, value):
         if value and not self.pattern.match(value):
             raise ValueError(f"Value does not match pattern: {value}")
-```
-
-## How to Use
-
-```python
-from blazingapi.orm.models import Model
-from blazingapi.orm.fields import TextField
-from blazingapi.orm.validators import RegexValidator
-
-
-class Product(Model):
-    code = TextField(validators=[RegexValidator(r'^[A-Z]{3}-\d{4}$')])
 ```

@@ -1,0 +1,19 @@
+---
+title: AuthenticationFailedException
+description: Documentation for the `AuthenticationFailedException` class.
+---
+
+Namespace `blazingapi.exceptions`
+
+The `AuthenticationFailedException` class is a subclass of the `APIException` class.
+
+It should be raised when the user's authentication credentials are invalid.
+
+## Class Definition
+
+```python
+class AuthenticationFailedException(APIException):
+    status_code = 401
+    default_detail = 'Authentication credentials were not provided or are invalid.'
+    default_code = 'authentication_failed'
+```

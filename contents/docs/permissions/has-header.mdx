@@ -1,0 +1,37 @@
+---
+title: HasHeader
+description: Documentation for the `HasHeader` class.
+---
+
+Namespace `blazingapi.permissions`
+
+The `HasHeader` class is a permission class that checks if a request has a specific header.
+
+## How to use
+
+```python
+from blazingapi.app import app
+from blazingapi.auth.permissions import IsAuthenticated
+
+
+@app.get("/books, permissions=[HasHeader("X-Api-Key")])
+def get_books(request):
+    """
+    Get all books
+    """
+```
+
+## Class Definition
+
+```python
+from blazingapi.exceptions import BadRequestException
+
+
+class HasHeader(BasePermission):
+    def __init__(self, header):
+        self.header = header
+
+    def __call__(self, request):
+        if self.header not in request.headers:
+            raise BadRequestException(f"Header {self.header} is required.")
+```

@@ -1,0 +1,19 @@
+---
+title: BadRequestException
+description: Documentation for the `BadRequestException` class.
+---
+
+Namespace `blazingapi.exceptions`
+
+The `BadRequestException` class is a subclass of the `APIException` class.
+
+It should be raised when the server cannot or will not process the request due to something that is perceived to be a client error.
+
+## Class Definition
+
+```python
+class BadRequestException(APIException):
+    status_code = 400
+    default_detail = 'The request could not be understood or was missing required parameters.'
+    default_code = 'bad_request'
+```

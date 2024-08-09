@@ -1,0 +1,54 @@
+---
+title: HasValidJSONSchema
+description: Documentation for the `HasValidJSONSchema` class.
+---
+
+Namespace `blazingapi.permissions`
+
+The `HasValidJSONSchema` class is a permission class that checks if the request body matches a given JSON schema.
+
+## How to use
+
+```python
+from blazingapi.app import app
+from blazingapi.permissions import HasValidJSONSchema
+
+
+schema = {
+    "type": "object",
+    "properties": {
+        "name": {"type": "string"},
+        "age": {"type": "number"},
+    },
+    "required": ["name", "age"],
+}
+
+@app.post("/example", permissions=[HasValidJSONSchema(schema)])
+def example(request):
+    return request.data
+```
+
+## Class Definition
+
+```python
+from jsonschema import validate
+from jsonschema.exceptions import ValidationError, SchemaError
+
+from blazingapi.exceptions import BadRequestException, InternalServerErrorException
+
+
+class HasValidJSONSchema(BasePermission):
+    def __init__(self, schema):
+        self.schema = schema
+
+    def __call__(self, request):
+        try:
+            validate(instance=request.data, schema=self.schema)
+        except ValidationError as e:
+            raise BadRequestException(f"JSON schema validation error: {e.message}")
+        except SchemaError as e:
+            raise InternalServerErrorException(f"Invalid JSON schema: {e.message}")
+```
+
+For more information on JSON schema, see the [JSON Schema documentation](https://json-schema.org/).
+

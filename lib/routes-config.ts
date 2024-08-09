@@ -54,26 +54,13 @@ export const ROUTES = [
     ]
   },
   {
-    title: "Validators",
-    href: "validators",
-    items: [
-      { title: "EmailValidator", href: "/email-validator" },
-      { title: "ChoiceValidator", href: "/choice-validator" },
-      { title: "RegexValidator", href: "/regex-validator" },
-      { title: "MaxValueValidator", href: "/max-value-validator" },
-      { title: "MinValueValidator", href: "/min-value-validator" },
-      { title: "PositiveNumberValidator", href: "/positive-number-validator" },
-      { title: "NegativeNumberValidator", href: "/negative-number-validator" },
-      { title: "Create Custom Validator", href: "/create-custom-validator" }
-    ]
-  },
-  {
     title: "Routing",
     href: "routing",
     items: [
       { title: "Basic Routing", href: "/basic-routing" },
       { title: "Route Parameters", href: "/route-parameters" },
       { title: "Route Permissions", href: "/route-permissions" },
+      { title: "Validate Request Body", href: "/validate-request-body" }
     ]
   },
   {
@@ -100,11 +87,41 @@ export const ROUTES = [
     ],
   },
   {
+    title: "Validators",
+    href: "validators",
+    items: [
+      { title: "EmailValidator", href: "/email-validator" },
+      { title: "ChoiceValidator", href: "/choice-validator" },
+      { title: "RegexValidator", href: "/regex-validator" },
+      { title: "MaxValueValidator", href: "/max-value-validator" },
+      { title: "MinValueValidator", href: "/min-value-validator" },
+      { title: "PositiveNumberValidator", href: "/positive-number-validator" },
+      { title: "NegativeNumberValidator", href: "/negative-number-validator" },
+      { title: "Create Custom Validator", href: "/create-custom-validator" }
+    ]
+  },
+  {
     title: "Permissions",
     href: "permissions",
     items: [
       { title: "IsAuthenticated" , href: "/is-authenticated" },
+      { title: "HasHeader", href: "/has-header" },
+      { title: "HasValidJSONSchema", href: "/has-valid-json-schema" },
       { title: "Create Custom Permission", href: "/create-custom-permission" }
+    ]
+  },
+  {
+    title: "Exceptions",
+    href: "exceptions",
+    items: [
+      { title: "APIException", href: "/api-exception" },
+      { title: "NotFoundException", href: "/not-found-exception" },
+      { title: "BadRequestException", href: "/bad-request-exception" },
+      { title: "InternalServerErrorException", href: "/internal-server-error-exception" },
+      { title: "ServiceUnavailableException", href: "/service-unavailable-exception" },
+      { title: "AuthenticationFailedException", href: "/authentication-failed-exception" },
+      { title: "PermissionDeniedException", href: "/permission-denied-exception" },
+      { title: "Create Custom Exception", href: "/create-custom-exception" },
     ]
   }
 ];

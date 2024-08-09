@@ -1,0 +1,36 @@
+---
+title: Validate Request Body
+description: Guide on how to use `HasValidJSONSchema` permission to validate request body.
+---
+
+BlazingAPI provides a built-in permission called `HasValidJSONSchema` that allows you to validate the JSON schema of the request body. This permission is useful when you want to restrict access to an endpoint based on the JSON schema of the request body.
+
+## Example
+
+In the following example, we will create an endpoint that requires the request body to have a specific JSON schema. We will use the `HasValidJSONSchema` permission to validate the JSON schema of the request body.
+
+```python
+from blazingapi.app import app
+from blazingapi.permissions import HasValidJSONSchema
+
+
+schema = {
+    "type": "object",
+    "properties": {
+        "name": {"type": "string"},
+        "age": {"type": "number"},
+    },
+    "required": ["name", "age"],
+}
+
+@app.post("/example", permissions=[HasValidJSONSchema(schema)])
+def example(request):
+    """
+    Implement your own logic knowing the request body obeys the schema.
+    """
+```
+
+<Note title={"Good to know"} type={"note"}>
+    <br/>
+    If the request body does not match the JSON schema, a [BadRequestException](/docs/exceptions/bad-request-exception) will be raised.
+</Note>

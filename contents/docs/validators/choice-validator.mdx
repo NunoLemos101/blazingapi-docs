@@ -7,19 +7,6 @@ Namespace `blazingapi.orm.validators`
 
 The `ChoiceValidator` class is a validator that checks if a value is one of the allowed choices.
 
-## Class Definition
-
-```python
-class ChoiceValidator(BaseValidator):
-
-    def __init__(self, choices):
-        self.choices = choices
-
-    def __call__(self, value):
-        if value is not None and value not in self.choices:
-            raise ValueError(f"Invalid choice: {value}")
-```
-
 ## How to Use
 
 ```python
@@ -39,4 +26,17 @@ class Genre(Enum):
 
 class Book(Model):
     genre = TextField(validators=[ChoiceValidator([genre.value for genre in Genre])])
+```
+
+## Class Definition
+
+```python
+class ChoiceValidator(BaseValidator):
+
+    def __init__(self, choices):
+        self.choices = choices
+
+    def __call__(self, value):
+        if value is not None and value not in self.choices:
+            raise ValueError(f"Invalid choice: {value}")
 ```

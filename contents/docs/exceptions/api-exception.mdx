@@ -1,0 +1,67 @@
+---
+title: APIException
+description: Documentation for the `APIException` class.
+---
+
+Namespace `blazingapi.exceptions`
+
+The `APIException` class is the base class for all exceptions that can be raised by the API.
+
+All exceptions that inherit from `APIException` will be caught by the underlying API and will return a JSON response with the exception message and status code.
+
+<Note title={"Important to know"} type={"warning"}>
+    <br/>
+    If an exception that **DOES NOT** inherit from `APIException` is raised, the underlying API will return a 500 status code and a generic error message.
+</Note>
+
+## Class Definition
+
+```python
+import sys
+import traceback
+
+from blazingapi.settings import settings
+
+
+class APIException(Exception):
+    status_code = 500
+    default_detail = 'A server error occurred.'
+    default_code = 'error'
+
+    def __init__(self, detail=None, status_code=None):
+        if detail is not None:
+            self.detail = detail
+        else:
+            self.detail = self.default_detail
+
+        if status_code is not None:
+            self.status_code = status_code
+
+        super().__init__(self.detail)
+
+    def serialize(self, request=None):
+        result = {
+            "code": self.default_code,
+            "detail": self.detail
+        }
+
+        if settings.DEBUG:
+            result["debug"] = {
+                "info": "You are seeing this because you have DEBUG=True in your settings.py file.",
+                "traceback": self._get_traceback()
+            }
+            if request is not None and isinstance(request, Request):
+                result["debug"]["request"] = {
+                    "method": request.method,
+                    "path": request.path,
+                    "headers": {k: v for k, v in request.headers.items()},
+                    "body": request.data
+                }
+
+        return result
+
+    def _get_traceback(self):
+        exc_type, exc_value, tb = sys.exc_info()
+        tb_list = traceback.format_exception(exc_type, exc_value, tb)
+        return tb_list
+```

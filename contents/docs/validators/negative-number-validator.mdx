@@ -7,16 +7,6 @@ Namespace `blazingapi.orm.validators`
 
 The `NegativeNumberValidator ` class is a validator that checks if a value is a negative number.
 
-## Class Definition
-
-```python
-class NegativeNumberValidator(BaseValidator):
-
-    def __call__(self, value):
-        if value is not None and value >= 0:
-            raise ValueError(f"Value {value} must be a negative number")
-```
-
 ## How to Use
 
 ```python
@@ -27,4 +17,14 @@ from blazingapi.orm.validators import NegativeNumberValidator
 
 class Debt(Model):
     amount = FloatField(validators=[NegativeNumberValidator()])
+```
+
+## Class Definition
+
+```python
+class NegativeNumberValidator(BaseValidator):
+
+    def __call__(self, value):
+        if value is not None and value >= 0:
+            raise ValueError(f"Value {value} must be a negative number")
 ```
