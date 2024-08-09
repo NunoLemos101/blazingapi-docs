@@ -1,0 +1,60 @@
+---
+title: Route Permissions
+description: Guide on how to use route permissions to restrict access to certain endpoints.
+---
+
+In your web API, you can use route permissions to restrict access to certain endpoints based on the user's authentication status or other criteria. This is done by specifying a list of permissions as an argument to the route decorator.
+
+## Example
+
+Below is an example of how BlazingAPI restricts access to the `settings.ME_ENDPOINT` endpoint using the `IsAuthenticated` permission.
+
+```python
+from blazingapi.app import app
+from blazingapi.auth.permissions import IsAuthenticated
+from blazingapi.response import Response
+from blazingapi.settings import settings
+
+@app.get(settings.ME_ENDPOINT, permissions=[IsAuthenticated])
+def me(request):
+    return Response(body=request.user, status=200)
+```
+
+## Create a Custom Permission
+
+You can create custom permissions by subclassing the `Permission` class and implementing the `has_permission` method.
+
+```python
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import ForeignKeyField, TextField
+from blazingapi.orm.validators import ChoiceValidator
+from blazingapi.auth.permissions import Permission
+
+
+class Role(Model):
+
+    user = ForeignKeyField(User, related_name='roles')
+    role = TextField(validators=[ChoiceValidator(['books.read', 'books.write', 'books.delete'])])
+
+
+class HasRole(Permission):
+    def __init__(self, role):
+        self.role = role
+
+    def __call__(self, request):
+        if len(request.user.roles.filter(role=self.role)) == 0:
+            raise APIException('Permission denied', status=403)
+
+
+@app.get('/books', permissions=[HasRole('books.read')])
+def get_books(request):
+    # Logic to get books
+
+@app.post('/books', permissions=[HasRole('books.write')])
+def create_book(request):
+    # Logic to create a book
+
+@app.delete('/books', permissions=[HasRole('books.delete')])
+def delete_book(request):
+    # Logic to delete a book
+```

@@ -52,7 +52,7 @@ article.save()
 print(article.serialize())
 ```
 
-The output of `article.serialize()` will be:
+The output of `article.serialize()` will be a `dict` object with the following structure:
 
 ```json
 {
@@ -69,3 +69,12 @@ The output of `article.serialize()` will be:
     }
 }
 ```
+
+<Note title={"Warning - Avoid infinite recursion"} type="warning">
+    <br/>
+    Be careful when setting the `depth_serialization_fields` property, as it can lead to infinite recursion if not used properly.
+
+    For more control over the serialization, you can override the `serialize()` method of the model and manually serialize the related models.
+
+    View the [Serialization Guide](/docs/models/serialization) for more information.
+</Note>

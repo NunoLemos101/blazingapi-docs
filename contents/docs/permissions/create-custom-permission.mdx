@@ -1,0 +1,78 @@
+---
+title: Custom Permission
+description: Guide on how to create a custom permission class to restrict access based on user roles.
+---
+
+You can create custom permissions by subclassing the `Permission` class and implementing the `__call__` method. This allows you to enforce more granular access control in your web API.
+
+## Full Example
+
+Below is an example of a custom permission class called `HasRole`, which allows access based on specific user roles.
+
+### Define Model
+
+First, ensure that you have the required models and validators in place to manage user roles.
+
+```python
+# models.py
+from blazingapi.orm.models import Model
+from blazingapi.orm.fields import ForeignKeyField, TextField
+from blazingapi.orm.validators import ChoiceValidator
+from blazingapi.auth.models import User
+
+class Role(Model):
+
+    ROLE_CHOICES = ['books.read', 'books.write', 'books.delete']
+
+    user = ForeignKeyField(User, related_name='roles')
+    role = TextField(validators=[ChoiceValidator(ROLE_CHOICES)])
+```
+
+### Define Custom Permission Class
+
+Next, create a custom permission class called `HasRole` that restricts access based on the user's role.
+
+```python
+# permissions.py
+from blazingapi.permissions import BasePermission
+from blazingapi.auth.exceptions import PermissionDeniedException
+
+
+class HasRole(BasePermission):
+    def __init__(self, role):
+        self.role = role
+
+    def __call__(self, request, view):
+        if user.roles.get(role=self.role) is None:
+            raise PermissionDeniedException()
+```
+
+### Using the Custom Permission
+
+Finally, use the custom permission class in your views to restrict access based on user roles.
+
+```python
+# views.py
+from blazingapi.app import app
+
+from permissions import HasRole
+
+
+@app.get('/books', permissions=[HasRole('books.read')])
+def get_books(request):
+    """
+    Get a list of books
+    """
+
+@app.post('/books', permissions=[HasRole('books.write')])
+def create_book(request):
+    """
+    Create a new book
+    """
+
+@app.delete('/books', permissions=[HasRole('books.delete')])
+def delete_book(request):
+    """
+    Delete a book
+    """
+```

@@ -23,7 +23,7 @@ export const ROUTES = [
       { title: "Saving Objects", href: "/saving-objects" },
       { title: "Updating Objects", href: "/updating-objects" },
       { title: "Deleting Objects", href: "/deleting-objects" },
-      { title: "Lazy Retrieval of Related Objects", href: "/lazy-retrieval-of-related-objects" },
+      { title: "Lazy Loading of Related Objects", href: "/lazy-loading-of-related-objects" },
       { title: "Reverse Relations", href: "/reverse-relations" },
       { title: "Serialization", href: "/serialization" },
       { title: "Serialization Depth", href: "/serialization-depth" },
@@ -72,13 +72,19 @@ export const ROUTES = [
     href: "routing",
     items: [
       { title: "Basic Routing", href: "/basic-routing" },
-      { title: "Route Parameters", href: "/route-parameters" }
+      { title: "Route Parameters", href: "/route-parameters" },
+      { title: "Route Permissions", href: "/route-permissions" },
     ]
   },
   {
     title: "Authentication",
     href: "authentication",
     items: [
+      { title: "Built-In User Model", href: "/built-in-user-model" },
+      { title: "Register a user", href: "/register-a-user" },
+      { title: "Login a user", href: "/login-a-user" },
+      { title: "Get current user", href: "/get-current-user" },
+      { title: "Built-In Authentication Middleware", href: "/built-in-authentication-middleware" },
       { title: "Disable Built-In Authentication", href: "/disable-built-in-authentication" }
     ]
   },
@@ -93,6 +99,14 @@ export const ROUTES = [
       { title: "Create Custom Middleware", href: "/create-middleware" },
     ],
   },
+  {
+    title: "Permissions",
+    href: "permissions",
+    items: [
+      { title: "IsAuthenticated" , href: "/is-authenticated" },
+      { title: "Create Custom Permission", href: "/create-custom-permission" }
+    ]
+  }
 ];
 
 export const page_routes = ROUTES.map(({ href, items }) => {

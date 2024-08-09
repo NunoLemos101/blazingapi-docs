@@ -31,11 +31,26 @@ class Article(Model):
         serialized_data = super().serialize()
 
         # Add custom fields or transform existing ones
-        serialized_data['summary'] = self.content[:100]
+        serialized_data['summary'] = f"{self.content[:10]}..."
 
         return serialized_data
+
+
+article = Article(title='Hello', content='This is a long article...', sensitive_data='Secret')
+
+print(article.serialize())
+```
+
+The output of `article.serialize()` will be a `dict` object with the following structure:
+
+```json
+{
+    "title": "Hello",
+    "content": "This is a long article...",
+    "summary": "This is a ..."
+}
 ```
 
 In this example, the `sensitive_data` field is not included in the `serializable_fields` list, so it won't be serialized by `super().serialize()`.
 
-Also, the `serialize()` method is overridden to include a custom `summary` field that contains the first 100 characters of the `content` field.
+Also, the `serialize()` method is overridden to include a custom `summary` field that contains the first 10 characters of the `content` field.
