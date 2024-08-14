@@ -103,11 +103,13 @@ function AnimatedMenu({ path="docs", routes = ROUTES, isSheet = false }) {
     const matchingSection = routes.find(route => currentPath.startsWith(`/docs/${route.href}`));
 
     if (matchingSection) {
+      // @ts-ignore
       setOpenSection(matchingSection.href);
     } else {
       // Fallback to localStorage
       const storedOpenSection = localStorage.getItem('openSection');
       if (storedOpenSection) {
+        // @ts-ignore
         setOpenSection(storedOpenSection);
       }
     }

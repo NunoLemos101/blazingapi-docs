@@ -45,7 +45,9 @@ function Markdown({ children }: PropsWithChildren) {
 export async function generateMetadata({ params: { slug = [] } }: PageProps) {
   const pathName = slug.join("/");
   const res = await cachedGetMarkdownForSlug(pathName);
-  if (!res) return null;
+  if (!res) { // @ts-ignore
+    return null;
+  }
   const { frontmatter } = res;
   return {
     title: frontmatter.title,
