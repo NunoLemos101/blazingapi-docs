@@ -26,7 +26,7 @@ export default async function DocsPage({ params: { slug = [] } }: PageProps) {
             {res.frontmatter.description}
           </p>
           <div>{res.content}</div>
-          <Pagination pathname={pathName} />
+          <Pagination pathname={pathName}  path={"docs"} routes={page_routes}/>
         </Markdown>
       </div>
       <Toc path={pathName} />
