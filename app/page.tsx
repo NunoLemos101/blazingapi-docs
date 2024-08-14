@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="flex sm:min-h-[91vh] min-h-[88vh] flex-col items-center justify-center text-center px-2 py-8">
       <Link
-        href="https://github.com/nisabmohd/Documentation-Template"
+        href="https://github.com/NunoLemos101/blazingapi"
         target="_blank"
         className="mb-5 sm:text-lg flex items-center gap-2 underline underline-offset-4"
       >
@@ -27,9 +27,8 @@ export default function Home() {
         The Ultimate <GradientText/> Web API Framework
       </h1>
       <p className="mb-8 sm:text-xl max-w-[800px] text-muted-foreground">
-        This feature-packed documentation template, built with Next.js, offers a
-        sleek and responsive design, perfect for all your project documentation
-        needs.
+        This feature-packed Web API framework, built with Python, offers a
+        simple and intuitive way to build APIs with ease
       </p>
       <div className="flex flex-row items-center gap-5">
         <Link
@@ -40,7 +39,7 @@ export default function Home() {
         </Link>
       </div>
       <span className="flex flex-row items-center gap-2 text-zinc-400 text-md mt-7 -mb-12 max-[800px]:mb-12">
-        <TerminalIcon className="w-4 h-4 mr-1" /> pip install blazingapi
+        <TerminalIcon className="w-4 h-4 mr-1" /> <span style={{fontFamily: "monospace"}}>pip install blazingapi</span>
       </span>
     </div>
   );

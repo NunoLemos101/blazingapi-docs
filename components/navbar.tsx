@@ -8,7 +8,7 @@ import { SheetLeftbar } from "./leftbar";
 import {db_routes, page_routes} from "@/lib/routes-config";
 import { SheetClose } from "@/components/ui/sheet";
 import Image from "next/image";
-import logo from "../public/logo.png"
+import logo from "../public/logo.jpg"
 
 export const NAVLINKS = [
   {
@@ -91,7 +91,7 @@ export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2.5">
       {/* <HexagonIcon className="w-7 h-7 text-muted-foreground fill-current" /> */}
-      <Image src={logo} width={48} height={48} alt={"logo.png"} />
+      <Image src={logo} width={48} height={48} alt={"logo.jpg"} />
       <h2 className="text-md font-bold">BlazingAPI</h2>
     </Link>
   );
