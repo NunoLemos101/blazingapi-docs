@@ -2,9 +2,10 @@ import { getPreviousNext } from "@/lib/markdown";
 import { buttonVariants } from "./ui/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
+import {page_routes} from "@/lib/routes-config";
 
-export default function Pagination({ pathname }: { pathname: string }) {
-  const res = getPreviousNext(pathname);
+export default function Pagination({path = "docs", routes = page_routes, pathname }: { pathname: string }) {
+  const res = getPreviousNext(routes, pathname);
 
   return (
     <div className="flex items-center justify-between sm:py-7 py-3">
@@ -23,7 +24,7 @@ export default function Pagination({ pathname }: { pathname: string }) {
         {res.next && (
           <Link
             className="flex items-center gap-2 no-underline text-sm px-1"
-            href={`/docs/${res.next.href}`}
+            href={`/${path}/${res.next.href}`}
           >
             <p>{res.next.title}</p>
             <ChevronRightIcon className="w-[1.1rem] h-[1.1rem]" />

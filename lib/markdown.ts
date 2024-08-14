@@ -76,11 +76,11 @@ export async function getTocs(slug: string) {
   return extractedHeadings;
 }
 
-export function getPreviousNext(path: string) {
-  const index = page_routes.findIndex(({ href }) => href == path);
+export function getPreviousNext(routes, path: string) {
+  const index = routes.findIndex(({ href }) => href == path);
   return {
-    prev: page_routes[index - 1],
-    next: page_routes[index + 1],
+    prev: routes[index - 1],
+    next: routes[index + 1],
   };
 }
 

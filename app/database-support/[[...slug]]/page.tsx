@@ -1,7 +1,7 @@
 import DocsBreadcrumb from "@/components/docs-breadcrumb";
 import Pagination from "@/components/pagination";
 import Toc from "@/components/toc";
-import { page_routes } from "@/lib/routes-config";
+import {db_routes, page_routes} from "@/lib/routes-config";
 import { notFound } from "next/navigation";
 import { getMarkdownForSlug } from "@/lib/markdown";
 import { PropsWithChildren, cache } from "react";
@@ -13,8 +13,9 @@ type PageProps = {
 const cachedGetMarkdownForSlug = cache(getMarkdownForSlug);
 
 export default async function DocsPage({ params: { slug = [] } }: PageProps) {
-  const pathName = slug.join("/");
+  const pathName = `${slug.join("/")}`;
   const res = await cachedGetMarkdownForSlug(pathName);
+
   if (!res) notFound();
   return (
     <div className="flex items-start gap-12">
@@ -26,7 +27,7 @@ export default async function DocsPage({ params: { slug = [] } }: PageProps) {
             {res.frontmatter.description}
           </p>
           <div>{res.content}</div>
-          <Pagination pathname={pathName} />
+          <Pagination path={"database-support"} routes={db_routes} pathname={pathName} />
         </Markdown>
       </div>
       <Toc path={pathName} />

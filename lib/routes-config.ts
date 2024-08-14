@@ -126,7 +126,28 @@ export const ROUTES = [
   }
 ];
 
+export const DB_ROUTES = [
+  {
+    title: "Supported Databases",
+    href: "supported-databases",
+    items: [
+      { title: "Databases", href: "/databases" },
+      { title: "SQLite", href: "/sqlite" },
+      { title: "PostgresSQL", href: "/postgresql" },
+    ]
+  }
+]
+
 export const page_routes = ROUTES.map(({ href, items }) => {
+  return items.map((link) => {
+    return {
+      title: link.title,
+      href: href + link.href,
+    };
+  });
+}).flat();
+
+export const db_routes = DB_ROUTES.map(({ href, items }) => {
   return items.map((link) => {
     return {
       title: link.title,

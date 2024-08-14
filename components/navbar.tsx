@@ -5,7 +5,7 @@ import { buttonVariants } from "./ui/button";
 import Search from "./search";
 import Anchor from "./anchor";
 import { SheetLeftbar } from "./leftbar";
-import { page_routes } from "@/lib/routes-config";
+import {db_routes, page_routes} from "@/lib/routes-config";
 import { SheetClose } from "@/components/ui/sheet";
 import Image from "next/image";
 import logo from "../public/logo.png"
@@ -14,6 +14,10 @@ export const NAVLINKS = [
   {
     title: "Documentation",
     href: `/docs/${page_routes[0].href}`,
+  },
+  {
+    title: "Database Support",
+    href: `/database-support/${db_routes[0].href}`,
   },
     /*
   {

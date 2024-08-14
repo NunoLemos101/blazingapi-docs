@@ -8,7 +8,7 @@ export default function DocsLayout({
 }>) {
   return (
     <div className="flex items-start gap-14">
-      <Leftbar />
+      <Leftbar path={"database-support"} routes={DB_ROUTES} />
       <div className="flex-[4]">{children}</div>{" "}
     </div>
   );

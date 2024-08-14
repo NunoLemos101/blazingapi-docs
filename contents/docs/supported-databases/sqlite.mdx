@@ -1,0 +1,24 @@
+---
+title: SQLite
+description: Guide to using SQLite with BlazingAPI
+---
+
+When you create a new BlazingAPI project, it comes connected to a SQLite database by default. This is a great way to get started quickly.
+
+The connection is defined by the property `DB_CONNECTION` in the `settings.py` file.
+
+```python
+...
+DB_CONNECTION = {
+    "driver": "sqlite",
+    "database": "db.sqlite3"
+}
+...
+```
+
+The `database` key specifies the path to the SQLite database file. By default, it is set to `db.sqlite3` in the root of the project.
+
+<Note title={"Good to know"} type="note">
+    <br/>
+    BlazingAPI uses the `sqlite` library to connect to SQLite databases.
+</Note>

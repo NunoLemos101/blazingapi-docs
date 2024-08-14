@@ -15,11 +15,11 @@ import {AlignLeftIcon, ChevronDown, ChevronRight} from "lucide-react";
 import { FooterButtons } from "./footer";
 import {useEffect, useRef, useState} from "react";
 
-export function Leftbar() {
+export function Leftbar({ path = "docs", routes = ROUTES }) {
   return (
     <aside className="md:flex hidden flex-[0.9] min-w-[230px] sticky top-16 flex-col h-[92.75vh] overflow-y-auto">
       <ScrollArea className="py-4">
-        <AnimatedMenu />
+        <AnimatedMenu path={path} routes={routes} />
       </ScrollArea>
     </aside>
   );
@@ -90,7 +90,7 @@ function Menu({ isSheet = false }) {
   );
 }
 
-function AnimatedMenu({ isSheet = false }) {
+function AnimatedMenu({ path="docs", routes = ROUTES, isSheet = false }) {
   const [openSection, setOpenSection] = useState(null);
   const contentRefs = useRef({});
 
@@ -100,7 +100,7 @@ function AnimatedMenu({ isSheet = false }) {
     const currentPath = window.location.pathname;
 
     // Try to find a section that matches the current URL
-    const matchingSection = ROUTES.find(route => currentPath.startsWith(`/docs/${route.href}`));
+    const matchingSection = routes.find(route => currentPath.startsWith(`/docs/${route.href}`));
 
     if (matchingSection) {
       setOpenSection(matchingSection.href);
@@ -140,7 +140,7 @@ function AnimatedMenu({ isSheet = false }) {
 
   return (
       <>
-        {ROUTES.map(({ href, items, title }) => {
+        {routes.map(({ href, items, title }) => {
           const isOpen = openSection === href;
           return (
               <div className="flex flex-col gap-3 mt-5" key={href}>
@@ -159,7 +159,7 @@ function AnimatedMenu({ isSheet = false }) {
                   {isOpen && (
                       <div className="flex flex-col gap-3 sm:text-sm dark:text-neutral-300/85 text-neutral-800 ml-0.5">
                         {items.map((subItem) => {
-                          const key = `/docs/${href}${subItem.href}`;
+                          const key = `/${path}/${href}${subItem.href}`;
                           const Comp = (
                               <Anchor
                                   activeClassName="font-medium text-primary"
