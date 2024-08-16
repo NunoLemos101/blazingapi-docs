@@ -133,7 +133,8 @@ export const DB_ROUTES = [
     items: [
       { title: "Databases", href: "/databases" },
       { title: "SQLite", href: "/sqlite" },
-      { title: "PostgresSQL", href: "/postgresql" },
+      { title: "PostgreSQL", href: "/postgresql" },
+      { title: "MySQL", href: "/mysql" },
     ]
   }
 ]

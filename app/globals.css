@@ -180,6 +180,7 @@ pre>code {
 
 .animatedGradient {
   background: linear-gradient(90deg, #306998, #FFD43B, #306998);
+  /*background: linear-gradient(90deg, #983030, #FFD43B, #983030);*/
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

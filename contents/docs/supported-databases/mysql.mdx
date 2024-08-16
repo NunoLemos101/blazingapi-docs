@@ -1,0 +1,41 @@
+---
+title: MySQL
+description: Guide to using MySQL with BlazingAPI
+---
+
+When deploying a BlazingAPI project, you can choose to use MySQL as your database. This guide will show you how to set up MySQL with BlazingAPI.
+
+The connection is defined by the property `DB_CONNECTION` in the `settings.py` file.
+
+To use MySQL, you need to specify the following attributes in the `DB_CONNECTION` dictionary:
+
+- `driver`: The database driver to use. For PostgreSQL, use `mysql`.
+- `host`: The hostname of the database server.
+- `port`: The port number of the database server.
+- `database`: The name of the database to connect to.
+- `user`: The username to use when connecting to the database.
+- `password`: The password to use when connecting to the database.
+
+Here is an example of how to configure PostgreSQL in the `settings.py` file:
+
+```python
+import os
+...
+DB_CONNECTION = {
+    'driver': 'mysql',
+    'host': os.environ['MYSQL_HOST'],
+    'port': '3306',
+    'database': os.environ['DATABASE_NAME']
+    'user': os.environ['USERNAME'],
+    'password': os.environ['PASSWORD']
+}
+...
+```
+
+Now BlazingAPI will use MySQL as the database for your project.
+
+<Note title={"Good to know"} type="note">
+    <br/>
+    BlazingAPI uses the `mysql-connector-python` library to connect to MySQL databases.
+</Note>
+
